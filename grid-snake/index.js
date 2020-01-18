@@ -23,8 +23,9 @@ const game = () => {
       cells[tailPos].classList.remove(snakeTailCssClass);
 
       // TODO: When wrapping, should just wrap around head
+      const row = Math.ceil(headPos / numberOfRows);
+
       if (direction === directions.right) {
-        const row = Math.ceil(headPos / numberOfRows);
         headPos = headPos + 1;
         if (headPos / row >= numberOfColumns)
           headPos = (row - 1) * numberOfColumns + 1;
@@ -35,6 +36,12 @@ const game = () => {
           headPos =
             (numberOfRows - 1) * numberOfColumns + (headPos % numberOfColumns);
         tailPos = headPos + numberOfColumns;
+      } else if (direction === directions.down) {
+        if (row >= numberOfRows)
+          headPos = numberOfColumns + (headPos % numberOfColumns);
+        else headPos = row * numberOfColumns + (headPos % numberOfColumns);
+
+        tailPos = headPos - numberOfColumns;
       }
 
       cells[headPos].classList.add(snakeHeadCssClass);
