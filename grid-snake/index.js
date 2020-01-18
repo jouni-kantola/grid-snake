@@ -42,6 +42,13 @@ const game = () => {
         else headPos = row * numberOfColumns + (headPos % numberOfColumns);
 
         tailPos = headPos - numberOfColumns;
+      } else if (direction === directions.left) {
+        if (headPos % numberOfColumns === 0) {
+          headPos = row * numberOfColumns + numberOfColumns - 2;
+        } else {
+          headPos = headPos - 1;
+        }
+        tailPos = headPos + 1;
       }
 
       cells[headPos].classList.add(snakeHeadCssClass);
