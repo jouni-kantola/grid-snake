@@ -5,11 +5,26 @@
     <style>
         * {
             box-sizing: border-box;
+            font-family: sans-serif;
+        }
+
+        .setup {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .setup * {
+            margin-left: 10px;
         }
 
         .grid {
             display: grid;
             grid-gap: 4px;
+            padding: 1rem;
+            justify-content: center;
+            align-content: center;
         }
 
         .cell {
@@ -41,12 +56,12 @@
 </head>
 
 <body>
-    <section>
+    <section class="setup">
         <label for="columns">Columns</label>
-        <input type="number" name="columns" id="columns" min="10" max="100" value="10" placeholder="Colums">
+        <input type="number" name="columns" id="columns" min="5" max="15" value="10" placeholder="Colums">
 
         <label for="rows">Rows</label>
-        <input type="number" name="rows" id="rows" min="10" max="100" value="10" placeholder="Rows">
+        <input type="number" name="rows" id="rows" min="5" max="15" value="10" placeholder="Rows">
 
         <button id="start">Start</button>
     </section>
