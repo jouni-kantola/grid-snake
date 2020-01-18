@@ -1,0 +1,35 @@
+<html>
+
+<head>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .grid {
+            display: grid;
+        }
+
+        .cell {
+            border: solid 1px black;
+            height: 2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <section>
+        <label for="columns">Columns</label>
+        <input type="number" name="columns" id="columns" min="10" max="100" value="10" placeholder="Colums">
+
+        <label for="rows">Rows</label>
+        <input type="number" name="rows" id="rows" min="10" max="100" value="10" placeholder="Rows">
+
+        <button id="start">Start</button>
+    </section>
+    <section class="grid"></section>
+    <script src="index.js"></script>
+</body>
+
+</html>
