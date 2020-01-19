@@ -3,6 +3,10 @@
 <head>
 
     <style>
+        body {
+            background-color: #F3F1F0;
+        }
+
         * {
             box-sizing: border-box;
             font-family: sans-serif;
@@ -36,7 +40,7 @@
         }
 
         .head {
-            background-color: greenyellow;
+            background-color: #DAA942;
             border-radius: 0 12px 12px 0;
         }
 
@@ -47,19 +51,59 @@
             line-height: 100%;
             font-size: x-large;
             font-weight: bold;
-            color: blue;
+            color: #2C4E5C;
         }
 
         .tail {
-            background: greenyellow;
+            background: #DAA942;
         }
 
-        .apple {
-            background: red;
+        .heart {
+            position: relative;
+            border: none;
         }
 
-        .rock {
-            background: gray;
+        .heart:before,
+        .heart:after {
+            position: absolute;
+            content: "";
+            left: 50%;
+            top: 10%;
+            width: 55%;
+            height: 80%;
+            background: #B34159;
+            border-radius: 50% 50% 0 0;
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+        }
+
+        .heart:after {
+            left: 0;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+        }
+
+        .stop {
+            position: relative;
+            border: none;
+        }
+
+        .stop:before,
+        .stop:after {
+            background: #333;
+            content: "";
+            height: 100%;
+            left: 45%;
+            position: absolute;
+            width: 3px;
+        }
+
+        .stop:before {
+            transform: rotate(45deg);
+        }
+
+        .stop:after {
+            transform: rotate(135deg);
         }
     </style>
 </head>
