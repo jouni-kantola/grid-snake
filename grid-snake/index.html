@@ -34,28 +34,38 @@
         .cell {
             border: solid 1px #ddd;
             height: 2rem;
-            border-radius: 5px;
+            border-radius: 100%;
             position: relative;
             transition: background-color 0.2s ease-out;
         }
 
         .head {
             background-color: #DAA942;
-            border-radius: 0 12px 12px 0;
+            border-radius: 100% 15px 15px 100%;
+        }
+
+        .head::before,
+        .head::after {
+            position: absolute;
+            content: "";
+            right: 7px;
+            height: 2px;
+            width: 7px;
+            background: #333;
+            border-radius: 100%;
+        }
+
+        .head:before {
+            top: 30%;
         }
 
         .head::after {
-            position: absolute;
-            content: ":";
-            right: 5px;
-            line-height: 100%;
-            font-size: x-large;
-            font-weight: bold;
-            color: #2C4E5C;
+            bottom: 30%;
         }
 
         .tail {
             background: #DAA942;
+            border-radius: 100%;
         }
 
         .heart {
