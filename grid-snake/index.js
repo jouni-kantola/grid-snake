@@ -12,10 +12,34 @@ const directions = {
 };
 let direction = directions.right;
 
+const levelConfig = {
+  1: {
+    apples: 2,
+    rocks: 2
+  },
+  2: {
+    apples: 3,
+    rocks: 3
+  }
+};
 const game = () => {
+  const cells = grid.querySelectorAll(".cell");
+
+  // TODO: prevent collisions
+  let level = 1;
+  const startLevelConfig = levelConfig[level];
+  const apples = new Array(startLevelConfig.apples)
+    .fill("apple")
+    .map(apple => Math.floor(Math.random() * numberOfCells))
+    .forEach(applePos => cells[applePos].classList.add("apple"));
+
+  const rocks = new Array(startLevelConfig.apples)
+    .fill("rock")
+    .map(rock => Math.floor(Math.random() * numberOfCells))
+    .forEach(rockPos => cells[rockPos].classList.add("rock"));
+
   let headPos = Math.floor(Math.random() * numberOfCells);
   let tailPos = headPos - 1;
-  const cells = grid.querySelectorAll(".cell");
 
   setInterval(() => {
     requestAnimationFrame(() => {
