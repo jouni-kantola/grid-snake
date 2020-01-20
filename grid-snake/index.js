@@ -44,28 +44,36 @@ const game = () => {
   setInterval(() => {
     requestAnimationFrame(() => {
       cells[headPos].classList.remove(snakeHeadCssClass);
+      cells[headPos].classList.remove("right");
+      cells[headPos].classList.remove("up");
+      cells[headPos].classList.remove("down");
+      cells[headPos].classList.remove("left");
       cells[tailPos].classList.remove(snakeTailCssClass);
 
       // TODO: When wrapping, should just wrap around head
       const row = Math.ceil(headPos / numberOfRows);
+      let directionCssClass;
 
       if (direction === directions.right) {
         headPos = headPos + 1;
         if (headPos / row >= numberOfColumns)
           headPos = (row - 1) * numberOfColumns + 1;
         tailPos = headPos - 1;
+        directionCssClass = "right";
       } else if (direction === directions.up) {
         headPos = headPos - numberOfColumns;
         if (headPos <= 0)
           headPos =
             (numberOfRows - 1) * numberOfColumns + (headPos % numberOfColumns);
         tailPos = headPos + numberOfColumns;
+        directionCssClass = "up";
       } else if (direction === directions.down) {
         if (row >= numberOfRows)
           headPos = numberOfColumns + (headPos % numberOfColumns);
         else headPos = row * numberOfColumns + (headPos % numberOfColumns);
 
         tailPos = headPos - numberOfColumns;
+        directionCssClass = "down";
       } else if (direction === directions.left) {
         if (headPos % numberOfColumns === 0) {
           headPos = row * numberOfColumns + numberOfColumns - 2;
@@ -73,9 +81,11 @@ const game = () => {
           headPos = headPos - 1;
         }
         tailPos = headPos + 1;
+        directionCssClass = "left";
       }
 
       cells[headPos].classList.add(snakeHeadCssClass);
+      cells[headPos].classList.add(directionCssClass);
       cells[tailPos].classList.add(snakeTailCssClass);
     });
   }, 400);

@@ -40,27 +40,87 @@
         }
 
         .head {
-            background-color: #DAA942;
-            border-radius: 100% 15px 15px 100%;
+            background: #DAA942;
         }
 
-        .head::before,
-        .head::after {
+        .head.right {
+            border-radius: 15px 100% 100% 15px;
+        }
+
+        .head.right::before,
+        .head.right::after,
+        .head.up::before,
+        .head.up::after,
+        .head.left::before,
+        .head.left::after,
+        .head.down::before,
+        .head.down::after {
             position: absolute;
             content: "";
             right: 7px;
             height: 2px;
             width: 7px;
             background: #333;
-            border-radius: 100%;
         }
 
-        .head:before {
+        .head.right:before {
             top: 30%;
         }
 
-        .head::after {
+        .head.right::after,
+        .head.left::after {
             bottom: 30%;
+        }
+
+        .head.left:before {
+            top: 30%;
+        }
+
+        .head.up {
+            border-radius: 100% 100% 15px 15px;
+        }
+
+        .head.up:before,
+        .head.up::after {
+            top: 35%;
+        }
+
+        .head.up:before {
+            left: 20%;
+            transform: rotate(135deg);
+        }
+
+        .head.up::after {
+            right: 20%;
+            transform: rotate(45deg);
+        }
+
+        .head.left {
+            border-radius: 100% 15px 15px 100%;
+        }
+
+        .head.left:before,
+        .head.left::after {
+            left: 20%;
+        }
+
+        .head.down {
+            border-radius: 15px 15px 100% 100%;
+        }
+
+        .head.down:before,
+        .head.down::after {
+            bottom: 35%;
+        }
+
+        .head.down:before {
+            left: 20%;
+            transform: rotate(45deg);
+        }
+
+        .head.down::after {
+            right: 20%;
+            transform: rotate(135deg);
         }
 
         .tail {
