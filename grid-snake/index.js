@@ -22,23 +22,31 @@ const levelConfig = {
     stops: 3
   }
 };
+
+const ensureFree = (max, alreadyTaken = []) => {
+  const rnd = Math.floor(Math.random() * max);
+  return !alreadyTaken.includes(rnd) ? rnd : ensureFree(max, alreadyTaken);
+};
+
 const game = () => {
   const cells = grid.querySelectorAll(".cell");
-
-  // TODO: prevent collisions
+  let alreadyTaken = [];
   let level = 1;
-  const startLevelConfig = levelConfig[level];
-  new Array(startLevelConfig.hearts)
-    .fill("heart")
-    .map(_ => Math.floor(Math.random() * numberOfCells))
-    .forEach(heartPos => cells[heartPos].classList.add("heart"));
 
-  new Array(startLevelConfig.hearts)
-    .fill("stop")
-    .map(_ => Math.floor(Math.random() * numberOfCells))
-    .forEach(stopPos => cells[stopPos].classList.add("stop"));
+  new Array(levelConfig[level].hearts).fill("heart").forEach(_ => {
+    const heart = ensureFree(numberOfCells);
+    alreadyTaken.push(heart);
+    cells[heart].classList.add("heart");
+  });
 
-  let headPos = Math.floor(Math.random() * numberOfCells);
+  new Array(levelConfig[level].stops).fill("stop").forEach(_ => {
+    const stop = ensureFree(numberOfCells, alreadyTaken);
+    alreadyTaken.push(stop);
+    cells[stop].classList.add("stop");
+  });
+
+  let headPos = ensureFree(numberOfCells, alreadyTaken);
+  // TODO: Ensure tail doesn't collide
   let tailPos = headPos - 1;
 
   setInterval(() => {
