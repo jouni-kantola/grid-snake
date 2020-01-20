@@ -3,14 +3,24 @@ const grid = document.querySelector(".grid");
 
 const snakeHeadCssClass = "head";
 const snakeTailCssClass = "tail";
-let numberOfColumns, numberOfRows, numberOfCells;
 const directions = {
   up: "ArrowUp",
   right: "ArrowRight",
   down: "ArrowDown",
   left: "ArrowLeft"
 };
-let direction = directions.right;
+
+let gameState = {
+  numberOfColumns: 0,
+  numberOfRows: 0,
+  get numberOfCells() {
+    return this.numberOfColumns * this.numberOfRows;
+  },
+  level: 1,
+  direction: directions.right,
+  hearts: [],
+  stops: []
+};
 
 const levelConfig = {
   1: {
@@ -30,24 +40,26 @@ const ensureFree = (max, alreadyTaken = []) => {
 
 const game = () => {
   const cells = grid.querySelectorAll(".cell");
-  let alreadyTaken = [];
-  let level = 1;
 
-  new Array(levelConfig[level].hearts).fill("heart").forEach(_ => {
-    const heart = ensureFree(numberOfCells);
-    alreadyTaken.push(heart);
+  new Array(levelConfig[gameState.level].hearts).fill("heart").forEach(_ => {
+    const heart = ensureFree(gameState.numberOfCells, gameState.hearts);
+    gameState.hearts.push(heart);
     cells[heart].classList.add("heart");
   });
 
-  let stops = [];
-  new Array(levelConfig[level].stops).fill("stop").forEach(_ => {
-    const stop = ensureFree(numberOfCells, alreadyTaken);
-    alreadyTaken.push(stop);
-    stops.push(stop);
+  new Array(levelConfig[gameState.level].stops).fill("stop").forEach(_ => {
+    const stop = ensureFree(gameState.numberOfCells, [
+      ...gameState.hearts,
+      ...gameState.stops
+    ]);
+    gameState.stops.push(stop);
     cells[stop].classList.add("stop");
   });
 
-  let headPos = ensureFree(numberOfCells, alreadyTaken);
+  let headPos = ensureFree(gameState.numberOfCells, [
+    ...gameState.hearts,
+    ...gameState.stops
+  ]);
   // TODO: Ensure tail doesn't collide
   let tailPos = headPos - 1;
 
@@ -60,33 +72,39 @@ const game = () => {
       cells[headPos].classList.remove("left");
       cells[tailPos].classList.remove(snakeTailCssClass);
 
-      // TODO: When wrapping, should just wrap around head
-      const row = Math.ceil(headPos / numberOfRows);
       let directionCssClass;
 
-      if (direction === directions.right) {
+      // TODO: When wrapping, should just wrap around head
+      const row = Math.ceil(headPos / gameState.numberOfRows);
+      if (gameState.direction === directions.right) {
         headPos = headPos + 1;
-        if (headPos / row >= numberOfColumns)
-          headPos = (row - 1) * numberOfColumns + 1;
+        if (headPos / row >= gameState.numberOfColumns)
+          headPos = (row - 1) * gameState.numberOfColumns + 1;
         tailPos = headPos - 1;
         directionCssClass = "right";
-      } else if (direction === directions.up) {
-        headPos = headPos - numberOfColumns;
+      } else if (gameState.direction === directions.up) {
+        headPos = headPos - gameState.numberOfColumns;
         if (headPos <= 0)
           headPos =
-            (numberOfRows - 1) * numberOfColumns + (headPos % numberOfColumns);
-        tailPos = headPos + numberOfColumns;
+            (gameState.numberOfRows - 1) * gameState.numberOfColumns +
+            (headPos % gameState.numberOfColumns);
+        tailPos = headPos + gameState.numberOfColumns;
         directionCssClass = "up";
-      } else if (direction === directions.down) {
-        if (row >= numberOfRows)
-          headPos = numberOfColumns + (headPos % numberOfColumns);
-        else headPos = row * numberOfColumns + (headPos % numberOfColumns);
+      } else if (gameState.direction === directions.down) {
+        if (row >= gameState.numberOfRows)
+          headPos =
+            gameState.numberOfColumns + (headPos % gameState.numberOfColumns);
+        else
+          headPos =
+            row * gameState.numberOfColumns +
+            (headPos % gameState.numberOfColumns);
 
-        tailPos = headPos - numberOfColumns;
+        tailPos = headPos - gameState.numberOfColumns;
         directionCssClass = "down";
-      } else if (direction === directions.left) {
-        if (headPos % numberOfColumns === 0) {
-          headPos = row * numberOfColumns + numberOfColumns - 2;
+      } else if (gameState.direction === directions.left) {
+        if (headPos % gameState.numberOfColumns === 0) {
+          headPos =
+            row * gameState.numberOfColumns + gameState.numberOfColumns - 2;
         } else {
           headPos = headPos - 1;
         }
@@ -94,7 +112,7 @@ const game = () => {
         directionCssClass = "left";
       }
 
-      if (stops.includes(headPos)) {
+      if (gameState.stops.includes(headPos)) {
         grid.classList.add("game-over");
         clearInterval(intervalId);
       }
@@ -106,11 +124,12 @@ const game = () => {
 };
 
 start.addEventListener("click", () => {
-  numberOfColumns = +document.querySelector("#columns").value;
-  numberOfRows = +document.querySelector("#rows").value;
+  gameState.numberOfColumns = +document.querySelector("#columns").value;
+  gameState.numberOfRows = +document.querySelector("#rows").value;
+  gameState.hearts = [];
+  gameState.stops = [];
 
-  numberOfCells = numberOfColumns * numberOfRows;
-  const cells = new Array(numberOfCells)
+  const cells = new Array(gameState.numberOfCells)
     .fill(document.createElement("span"))
     .map(span => {
       const cell = span.cloneNode();
@@ -121,7 +140,7 @@ start.addEventListener("click", () => {
   requestAnimationFrame(() => {
     grid.innerHTML = "";
     grid.classList.remove("game-over");
-    grid.style.gridTemplateColumns = `repeat(${numberOfColumns}, 2rem)`;
+    grid.style.gridTemplateColumns = `repeat(${gameState.numberOfColumns}, 2rem)`;
     cells.forEach(cell => {
       grid.appendChild(cell);
     });
@@ -133,16 +152,16 @@ start.addEventListener("click", () => {
 window.addEventListener("keydown", event => {
   switch (event.key) {
     case "ArrowLeft":
-      direction = directions.left;
+      gameState.direction = directions.left;
       break;
     case "ArrowUp":
-      direction = directions.up;
+      gameState.direction = directions.up;
       break;
     case "ArrowRight":
-      direction = directions.right;
+      gameState.direction = directions.right;
       break;
     case "ArrowDown":
-      direction = directions.down;
+      gameState.direction = directions.down;
       break;
   }
 });
