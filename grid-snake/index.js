@@ -119,6 +119,8 @@ start.addEventListener("click", () => {
     });
 
   requestAnimationFrame(() => {
+    grid.innerHTML = "";
+    grid.classList.remove("game-over");
     grid.style.gridTemplateColumns = `repeat(${numberOfColumns}, 2rem)`;
     cells.forEach(cell => {
       grid.appendChild(cell);
