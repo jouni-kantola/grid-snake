@@ -39,9 +39,11 @@ const game = () => {
     cells[heart].classList.add("heart");
   });
 
+  let stops = [];
   new Array(levelConfig[level].stops).fill("stop").forEach(_ => {
     const stop = ensureFree(numberOfCells, alreadyTaken);
     alreadyTaken.push(stop);
+    stops.push(stop);
     cells[stop].classList.add("stop");
   });
 
@@ -49,7 +51,7 @@ const game = () => {
   // TODO: Ensure tail doesn't collide
   let tailPos = headPos - 1;
 
-  setInterval(() => {
+  const intervalId = setInterval(() => {
     requestAnimationFrame(() => {
       cells[headPos].classList.remove(snakeHeadCssClass);
       cells[headPos].classList.remove("right");
@@ -92,6 +94,10 @@ const game = () => {
         directionCssClass = "left";
       }
 
+      if (stops.includes(headPos)) {
+        grid.classList.add("game-over");
+        clearInterval(intervalId);
+      }
       cells[headPos].classList.add(snakeHeadCssClass);
       cells[headPos].classList.add(directionCssClass);
       cells[tailPos].classList.add(snakeTailCssClass);

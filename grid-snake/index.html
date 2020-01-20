@@ -29,6 +29,12 @@
             padding: 1rem;
             justify-content: center;
             align-content: center;
+            position: relative;
+            transition: transform 0.5s ease-out;
+        }
+
+        .grid.game-over {
+            transform: rotate3d(1, 1, 1, 45deg);
         }
 
         .cell {
