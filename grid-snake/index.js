@@ -82,43 +82,7 @@ const game = () => {
       cells[headPos].classList.remove("left");
       cells[tailPos].classList.remove(snakeTailCssClass);
 
-      // TODO: When wrapping, should just wrap around head
-      // TODO: Ensure tail doesn't wrap out of bounds
-      const row = Math.ceil(headPos / gameState.numberOfRows);
-      if (gameState.direction === directions.right) {
-        headPos = headPos + 1;
-        if (headPos / row >= gameState.numberOfColumns)
-          headPos = (row - 1) * gameState.numberOfColumns + 1;
-        tailPos = headPos - 1;
-      } else if (gameState.direction === directions.up) {
-        headPos = headPos - gameState.numberOfColumns;
-        if (headPos <= 0) {
-          headPos =
-            gameState.numberOfRows * gameState.numberOfColumns +
-            (headPos % gameState.numberOfColumns);
-          tailPos = headPos % gameState.numberOfColumns;
-        } else {
-          tailPos = headPos + gameState.numberOfColumns;
-        }
-      } else if (gameState.direction === directions.down) {
-        if (row >= gameState.numberOfRows)
-          headPos =
-            gameState.numberOfColumns + (headPos % gameState.numberOfColumns);
-        else
-          headPos =
-            row * gameState.numberOfColumns +
-            (headPos % gameState.numberOfColumns);
-
-        tailPos = headPos - gameState.numberOfColumns;
-      } else if (gameState.direction === directions.left) {
-        if (headPos % gameState.numberOfColumns === 0) {
-          headPos =
-            row * gameState.numberOfColumns + gameState.numberOfColumns - 2;
-        } else {
-          headPos = headPos - 1;
-        }
-        tailPos = headPos + 1;
-      }
+      ({ headPos, tailPos } = updateSnakePositions(headPos));
 
       const directionCssClass =
         gameState.direction === directions.right
@@ -195,3 +159,43 @@ window.addEventListener("keydown", event => {
       break;
   }
 });
+
+// TODO: When wrapping, should just wrap around head
+// TODO: Ensure tail doesn't wrap out of bounds
+function updateSnakePositions(headPos) {
+  const row = Math.ceil(headPos / gameState.numberOfRows);
+  let tmpHeadPos, tmpTailPos;
+  if (gameState.direction === directions.right) {
+    tmpHeadPos = headPos + 1;
+    if (tmpHeadPos / row >= gameState.numberOfColumns)
+      tmpHeadPos = (row - 1) * gameState.numberOfColumns + 1;
+    tmpTailPos = tmpHeadPos - 1;
+  } else if (gameState.direction === directions.up) {
+    tmpHeadPos = headPos - gameState.numberOfColumns;
+    if (tmpHeadPos <= 0) {
+      tmpHeadPos =
+        gameState.numberOfRows * gameState.numberOfColumns +
+        (tmpHeadPos % gameState.numberOfColumns);
+      tmpTailPos = tmpHeadPos % gameState.numberOfColumns;
+    } else {
+      tmpTailPos = tmpHeadPos + gameState.numberOfColumns;
+    }
+  } else if (gameState.direction === directions.down) {
+    if (row >= gameState.numberOfRows)
+      tmpHeadPos =
+        gameState.numberOfColumns + (headPos % gameState.numberOfColumns);
+    else
+      tmpHeadPos =
+        row * gameState.numberOfColumns + (headPos % gameState.numberOfColumns);
+    tmpTailPos = tmpHeadPos - gameState.numberOfColumns;
+  } else if (gameState.direction === directions.left) {
+    if (headPos % gameState.numberOfColumns === 0) {
+      tmpHeadPos =
+        row * gameState.numberOfColumns + gameState.numberOfColumns - 2;
+    } else {
+      tmpHeadPos = headPos - 1;
+    }
+    tmpTailPos = tmpHeadPos + 1;
+  }
+  return { headPos: tmpHeadPos, tailPos: tmpTailPos };
+}
