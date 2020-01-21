@@ -193,10 +193,9 @@ function updateSnake(previous) {
         : updated;
     }
     default: {
-      const row = Math.ceil(previous / gameState.numberOfRows);
-      const updated = previous + 1;
-      return updated / row === gameState.numberOfColumns
-        ? (row - 1) * gameState.numberOfColumns
+      let updated = previous + 1;
+      return updated % gameState.numberOfColumns === 0
+        ? updated - gameState.numberOfColumns
         : updated;
     }
   }
