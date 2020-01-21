@@ -131,8 +131,14 @@ const game = () => {
         clearInterval(intervalId);
       } else if (gameState.hearts.includes(headPos)) {
         cells[headPos].classList.remove(heartCssClass);
+        gameState.hearts = gameState.hearts.filter(heart => heart !== headPos);
         gameState.score += levelConfig[gameState.level].score;
         score.textContent = gameState.score;
+
+        if (!gameState.hearts.length) {
+          grid.classList.add("level-clear");
+          clearInterval(intervalId);
+        }
       }
 
       cells[headPos].classList.add(snakeHeadCssClass);
