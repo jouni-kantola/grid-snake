@@ -192,10 +192,9 @@ function updateSnake(previous) {
     if (updated / gameState.numberOfRows > gameState.numberOfRows)
       updated = previous % gameState.numberOfColumns;
   } else if (gameState.direction === directions.left) {
+    updated = previous - 1;
     if (previous % gameState.numberOfColumns === 0) {
-      updated = row * gameState.numberOfColumns + gameState.numberOfColumns - 2;
-    } else {
-      updated = previous - 1;
+      updated = row * gameState.numberOfColumns + gameState.numberOfColumns - 1;
     }
   }
   return updated;
