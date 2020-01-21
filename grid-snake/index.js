@@ -82,8 +82,6 @@ const game = () => {
       cells[headPos].classList.remove("left");
       cells[tailPos].classList.remove(snakeTailCssClass);
 
-      let directionCssClass;
-
       // TODO: When wrapping, should just wrap around head
       // TODO: Ensure tail doesn't wrap out of bounds
       const row = Math.ceil(headPos / gameState.numberOfRows);
@@ -92,7 +90,6 @@ const game = () => {
         if (headPos / row >= gameState.numberOfColumns)
           headPos = (row - 1) * gameState.numberOfColumns + 1;
         tailPos = headPos - 1;
-        directionCssClass = "right";
       } else if (gameState.direction === directions.up) {
         headPos = headPos - gameState.numberOfColumns;
         if (headPos <= 0) {
@@ -103,7 +100,6 @@ const game = () => {
         } else {
           tailPos = headPos + gameState.numberOfColumns;
         }
-        directionCssClass = "up";
       } else if (gameState.direction === directions.down) {
         if (row >= gameState.numberOfRows)
           headPos =
@@ -114,7 +110,6 @@ const game = () => {
             (headPos % gameState.numberOfColumns);
 
         tailPos = headPos - gameState.numberOfColumns;
-        directionCssClass = "down";
       } else if (gameState.direction === directions.left) {
         if (headPos % gameState.numberOfColumns === 0) {
           headPos =
@@ -123,8 +118,16 @@ const game = () => {
           headPos = headPos - 1;
         }
         tailPos = headPos + 1;
-        directionCssClass = "left";
       }
+
+      const directionCssClass =
+        gameState.direction === directions.right
+          ? "right"
+          : gameState.direction === directions.up
+          ? "up"
+          : gameState.direction === directions.down
+          ? "down"
+          : "left";
 
       if (gameState.stops.includes(headPos)) {
         grid.classList.add("game-over");
