@@ -1,5 +1,6 @@
 const start = document.querySelector("#start");
 const grid = document.querySelector(".grid");
+const score = document.querySelector(".score");
 
 const snakeHeadCssClass = "head";
 const snakeTailCssClass = "tail";
@@ -131,6 +132,7 @@ const game = () => {
       } else if (gameState.hearts.includes(headPos)) {
         cells[headPos].classList.remove(heartCssClass);
         gameState.score += levelConfig[gameState.level].score;
+        score.textContent = gameState.score;
       }
 
       cells[headPos].classList.add(snakeHeadCssClass);

@@ -23,6 +23,10 @@
             margin-left: 10px;
         }
 
+        .score::before {
+            content: "Score: ";
+        }
+
         .grid {
             display: grid;
             grid-gap: 4px;
@@ -198,6 +202,7 @@
 
         <button id="start">Start</button>
     </section>
+    <div class="score">0</div>
     <section class="grid"></section>
     <script src="index.js"></script>
 </body>
