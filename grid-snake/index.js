@@ -187,13 +187,10 @@ function updateSnake(previous) {
         (updated % gameState.numberOfColumns);
     }
   } else if (gameState.direction === directions.down) {
-    if (row >= gameState.numberOfRows)
-      updated =
-        gameState.numberOfColumns + (previous % gameState.numberOfColumns);
-    else
-      updated =
-        row * gameState.numberOfColumns +
-        (previous % gameState.numberOfColumns);
+    updated =
+      row * gameState.numberOfColumns + (previous % gameState.numberOfColumns);
+    if (updated / gameState.numberOfRows > gameState.numberOfRows)
+      updated = previous % gameState.numberOfColumns;
   } else if (gameState.direction === directions.left) {
     if (previous % gameState.numberOfColumns === 0) {
       updated = row * gameState.numberOfColumns + gameState.numberOfColumns - 2;
