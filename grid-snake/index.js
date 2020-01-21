@@ -77,6 +77,7 @@ const game = () => {
       let directionCssClass;
 
       // TODO: When wrapping, should just wrap around head
+      // TODO: Ensure tail doesn't wrap out of bounds
       const row = Math.ceil(headPos / gameState.numberOfRows);
       if (gameState.direction === directions.right) {
         headPos = headPos + 1;
@@ -86,11 +87,14 @@ const game = () => {
         directionCssClass = "right";
       } else if (gameState.direction === directions.up) {
         headPos = headPos - gameState.numberOfColumns;
-        if (headPos <= 0)
+        if (headPos <= 0) {
           headPos =
-            (gameState.numberOfRows - 1) * gameState.numberOfColumns +
+            gameState.numberOfRows * gameState.numberOfColumns +
             (headPos % gameState.numberOfColumns);
-        tailPos = headPos + gameState.numberOfColumns;
+          tailPos = headPos % gameState.numberOfColumns;
+        } else {
+          tailPos = headPos + gameState.numberOfColumns;
+        }
         directionCssClass = "up";
       } else if (gameState.direction === directions.down) {
         if (row >= gameState.numberOfRows)
