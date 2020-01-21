@@ -171,28 +171,33 @@ window.addEventListener("keydown", event => {
 });
 
 function updateSnake(previous) {
-  const row = Math.ceil(previous / gameState.numberOfRows);
-  let updated;
-  if (gameState.direction === directions.right) {
-    updated = previous + 1;
-    if (updated / row === gameState.numberOfColumns)
-      updated = (row - 1) * gameState.numberOfColumns;
-  } else if (gameState.direction === directions.up) {
-    updated = previous - gameState.numberOfColumns;
-    if (updated <= 0) {
-      updated =
-        gameState.numberOfRows * gameState.numberOfColumns +
-        (updated % gameState.numberOfColumns);
+  switch (gameState.direction) {
+    case directions.left: {
+      const row = Math.ceil(previous / gameState.numberOfRows);
+      const updated = previous - 1;
+      return previous % gameState.numberOfColumns === 0
+        ? row * gameState.numberOfColumns + gameState.numberOfColumns - 1
+        : updated;
     }
-  } else if (gameState.direction === directions.down) {
-    updated = previous + gameState.numberOfColumns;
-    if (updated / gameState.numberOfRows > gameState.numberOfRows)
-      updated = previous % gameState.numberOfColumns;
-  } else if (gameState.direction === directions.left) {
-    updated = previous - 1;
-    if (previous % gameState.numberOfColumns === 0) {
-      updated = row * gameState.numberOfColumns + gameState.numberOfColumns - 1;
+    case directions.up: {
+      const updated = previous - gameState.numberOfColumns;
+      return updated <= 0
+        ? gameState.numberOfRows * gameState.numberOfColumns +
+            (updated % gameState.numberOfColumns)
+        : updated;
+    }
+    case directions.down: {
+      const updated = previous + gameState.numberOfColumns;
+      return updated / gameState.numberOfRows > gameState.numberOfRows
+        ? previous % gameState.numberOfColumns
+        : updated;
+    }
+    default: {
+      const row = Math.ceil(previous / gameState.numberOfRows);
+      const updated = previous + 1;
+      return updated / row === gameState.numberOfColumns
+        ? (row - 1) * gameState.numberOfColumns
+        : updated;
     }
   }
-  return updated;
 }
