@@ -177,8 +177,8 @@ function updateSnake(previous) {
   let updated;
   if (gameState.direction === directions.right) {
     updated = previous + 1;
-    if (updated / row >= gameState.numberOfColumns)
-      updated = (row - 1) * gameState.numberOfColumns + 1;
+    if (updated / row === gameState.numberOfColumns)
+      updated = (row - 1) * gameState.numberOfColumns;
   } else if (gameState.direction === directions.up) {
     updated = previous - gameState.numberOfColumns;
     if (updated <= 0) {
