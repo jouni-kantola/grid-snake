@@ -90,8 +90,7 @@ const game = () => {
       cells[gameState.head].classList.remove("left");
       cells[gameState.snake[1]].classList.remove(snakeTailCssClass);
 
-      const [head, ...tail] = updateSnakePositions(gameState.head);
-      gameState.snake.unshift(head);
+      gameState.snake.unshift(updateSnake(gameState.head));
 
       const directionCssClass =
         gameState.direction === directions.right
@@ -173,40 +172,34 @@ window.addEventListener("keydown", event => {
 
 // TODO: When wrapping, should just wrap around head
 // TODO: Ensure tail doesn't wrap out of bounds
-function updateSnakePositions(headPos) {
-  const row = Math.ceil(headPos / gameState.numberOfRows);
-  let tmpHeadPos, tmpTailPos;
+function updateSnake(previous) {
+  const row = Math.ceil(previous / gameState.numberOfRows);
+  let updated;
   if (gameState.direction === directions.right) {
-    tmpHeadPos = headPos + 1;
-    if (tmpHeadPos / row >= gameState.numberOfColumns)
-      tmpHeadPos = (row - 1) * gameState.numberOfColumns + 1;
-    tmpTailPos = tmpHeadPos - 1;
+    updated = previous + 1;
+    if (updated / row >= gameState.numberOfColumns)
+      updated = (row - 1) * gameState.numberOfColumns + 1;
   } else if (gameState.direction === directions.up) {
-    tmpHeadPos = headPos - gameState.numberOfColumns;
-    if (tmpHeadPos <= 0) {
-      tmpHeadPos =
+    updated = previous - gameState.numberOfColumns;
+    if (updated <= 0) {
+      updated =
         gameState.numberOfRows * gameState.numberOfColumns +
-        (tmpHeadPos % gameState.numberOfColumns);
-      tmpTailPos = tmpHeadPos % gameState.numberOfColumns;
-    } else {
-      tmpTailPos = tmpHeadPos + gameState.numberOfColumns;
+        (updated % gameState.numberOfColumns);
     }
   } else if (gameState.direction === directions.down) {
     if (row >= gameState.numberOfRows)
-      tmpHeadPos =
-        gameState.numberOfColumns + (headPos % gameState.numberOfColumns);
+      updated =
+        gameState.numberOfColumns + (previous % gameState.numberOfColumns);
     else
-      tmpHeadPos =
-        row * gameState.numberOfColumns + (headPos % gameState.numberOfColumns);
-    tmpTailPos = tmpHeadPos - gameState.numberOfColumns;
+      updated =
+        row * gameState.numberOfColumns +
+        (previous % gameState.numberOfColumns);
   } else if (gameState.direction === directions.left) {
-    if (headPos % gameState.numberOfColumns === 0) {
-      tmpHeadPos =
-        row * gameState.numberOfColumns + gameState.numberOfColumns - 2;
+    if (previous % gameState.numberOfColumns === 0) {
+      updated = row * gameState.numberOfColumns + gameState.numberOfColumns - 2;
     } else {
-      tmpHeadPos = headPos - 1;
+      updated = previous - 1;
     }
-    tmpTailPos = tmpHeadPos + 1;
   }
-  return [tmpHeadPos, tmpTailPos];
+  return updated;
 }
