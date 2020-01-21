@@ -23,7 +23,12 @@ let gameState = {
   direction: directions.right,
   hearts: [],
   stops: [],
-  score: 0
+  score: 0,
+  snake: [],
+  get head() {
+    const [head, ...tail] = this.snake;
+    return head;
+  }
 };
 
 const levelConfig = {
@@ -66,23 +71,27 @@ const game = () => {
     cells[stop].classList.add("stop");
   });
 
-  let headPos = ensureFree(1, gameState.numberOfCells, [
-    ...gameState.hearts,
-    ...gameState.stops
-  ]);
+  gameState.snake.push(
+    ensureFree(1, gameState.numberOfCells, [
+      ...gameState.hearts,
+      ...gameState.stops
+    ])
+  );
+
   // TODO: Ensure tail doesn't collide
-  let tailPos = headPos - 1;
+  gameState.snake.push(gameState.head - 1);
 
   const intervalId = setInterval(() => {
     requestAnimationFrame(() => {
-      cells[headPos].classList.remove(snakeHeadCssClass);
-      cells[headPos].classList.remove("right");
-      cells[headPos].classList.remove("up");
-      cells[headPos].classList.remove("down");
-      cells[headPos].classList.remove("left");
-      cells[tailPos].classList.remove(snakeTailCssClass);
+      cells[gameState.head].classList.remove(snakeHeadCssClass);
+      cells[gameState.head].classList.remove("right");
+      cells[gameState.head].classList.remove("up");
+      cells[gameState.head].classList.remove("down");
+      cells[gameState.head].classList.remove("left");
+      cells[gameState.snake[1]].classList.remove(snakeTailCssClass);
 
-      ({ headPos, tailPos } = updateSnakePositions(headPos));
+      const [head, ...tail] = updateSnakePositions(gameState.head);
+      gameState.snake.unshift(head);
 
       const directionCssClass =
         gameState.direction === directions.right
@@ -93,12 +102,14 @@ const game = () => {
           ? "down"
           : "left";
 
-      if (gameState.stops.includes(headPos)) {
+      if (gameState.stops.includes(gameState.head)) {
         grid.classList.add("game-over");
         clearInterval(intervalId);
-      } else if (gameState.hearts.includes(headPos)) {
-        cells[headPos].classList.remove(heartCssClass);
-        gameState.hearts = gameState.hearts.filter(heart => heart !== headPos);
+      } else if (gameState.hearts.includes(gameState.head)) {
+        cells[gameState.head].classList.remove(heartCssClass);
+        gameState.hearts = gameState.hearts.filter(
+          heart => heart !== gameState.head
+        );
         gameState.score += levelConfig[gameState.level].score;
         score.textContent = gameState.score;
 
@@ -108,9 +119,9 @@ const game = () => {
         }
       }
 
-      cells[headPos].classList.add(snakeHeadCssClass);
-      cells[headPos].classList.add(directionCssClass);
-      cells[tailPos].classList.add(snakeTailCssClass);
+      cells[gameState.head].classList.add(snakeHeadCssClass);
+      cells[gameState.head].classList.add(directionCssClass);
+      cells[gameState.snake[1]].classList.add(snakeTailCssClass);
     });
   }, 400);
 };
@@ -197,5 +208,5 @@ function updateSnakePositions(headPos) {
     }
     tmpTailPos = tmpHeadPos + 1;
   }
-  return { headPos: tmpHeadPos, tailPos: tmpTailPos };
+  return [tmpHeadPos, tmpTailPos];
 }
