@@ -128,6 +128,7 @@ start.addEventListener("click", () => {
   gameState.numberOfRows = +document.querySelector("#rows").value;
   gameState.hearts = [];
   gameState.stops = [];
+  gameState.direction = directions.right;
 
   const cells = new Array(gameState.numberOfCells)
     .fill(document.createElement("span"))
