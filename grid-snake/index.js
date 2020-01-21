@@ -33,22 +33,24 @@ const levelConfig = {
   }
 };
 
-const ensureFree = (max, alreadyTaken = []) => {
+const ensureFree = (min, max, alreadyTaken = []) => {
   const rnd = Math.floor(Math.random() * max);
-  return !alreadyTaken.includes(rnd) ? rnd : ensureFree(max, alreadyTaken);
+  return rnd >= min && !alreadyTaken.includes(rnd)
+    ? rnd
+    : ensureFree(min, max, alreadyTaken);
 };
 
 const game = () => {
   const cells = grid.querySelectorAll(".cell");
 
   new Array(levelConfig[gameState.level].hearts).fill("heart").forEach(_ => {
-    const heart = ensureFree(gameState.numberOfCells, gameState.hearts);
+    const heart = ensureFree(0, gameState.numberOfCells, gameState.hearts);
     gameState.hearts.push(heart);
     cells[heart].classList.add("heart");
   });
 
   new Array(levelConfig[gameState.level].stops).fill("stop").forEach(_ => {
-    const stop = ensureFree(gameState.numberOfCells, [
+    const stop = ensureFree(0, gameState.numberOfCells, [
       ...gameState.hearts,
       ...gameState.stops
     ]);
@@ -56,7 +58,7 @@ const game = () => {
     cells[stop].classList.add("stop");
   });
 
-  let headPos = ensureFree(gameState.numberOfCells, [
+  let headPos = ensureFree(1, gameState.numberOfCells, [
     ...gameState.hearts,
     ...gameState.stops
   ]);
