@@ -3,6 +3,8 @@ const grid = document.querySelector(".grid");
 
 const snakeHeadCssClass = "head";
 const snakeTailCssClass = "tail";
+const heartCssClass = "heart";
+
 const directions = {
   up: "ArrowUp",
   right: "ArrowRight",
@@ -19,16 +21,19 @@ let gameState = {
   level: 1,
   direction: directions.right,
   hearts: [],
-  stops: []
+  stops: [],
+  score: 0
 };
 
 const levelConfig = {
   1: {
     hearts: 2,
+    score: 10,
     stops: 2
   },
   2: {
     hearts: 3,
+    score: 20,
     stops: 3
   }
 };
@@ -43,11 +48,13 @@ const ensureFree = (min, max, alreadyTaken = []) => {
 const game = () => {
   const cells = grid.querySelectorAll(".cell");
 
-  new Array(levelConfig[gameState.level].hearts).fill("heart").forEach(_ => {
-    const heart = ensureFree(0, gameState.numberOfCells, gameState.hearts);
-    gameState.hearts.push(heart);
-    cells[heart].classList.add("heart");
-  });
+  new Array(levelConfig[gameState.level].hearts)
+    .fill(heartCssClass)
+    .forEach(cssClass => {
+      const heart = ensureFree(0, gameState.numberOfCells, gameState.hearts);
+      gameState.hearts.push(heart);
+      cells[heart].classList.add(cssClass);
+    });
 
   new Array(levelConfig[gameState.level].stops).fill("stop").forEach(_ => {
     const stop = ensureFree(0, gameState.numberOfCells, [
@@ -121,7 +128,11 @@ const game = () => {
       if (gameState.stops.includes(headPos)) {
         grid.classList.add("game-over");
         clearInterval(intervalId);
+      } else if (gameState.hearts.includes(headPos)) {
+        cells[headPos].classList.remove(heartCssClass);
+        gameState.score += levelConfig[gameState.level].score;
       }
+
       cells[headPos].classList.add(snakeHeadCssClass);
       cells[headPos].classList.add(directionCssClass);
       cells[tailPos].classList.add(snakeTailCssClass);
@@ -135,6 +146,7 @@ start.addEventListener("click", () => {
   gameState.hearts = [];
   gameState.stops = [];
   gameState.direction = directions.right;
+  gameState.score = 0;
 
   const cells = new Array(gameState.numberOfCells)
     .fill(document.createElement("span"))
