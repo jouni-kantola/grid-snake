@@ -170,8 +170,6 @@ window.addEventListener("keydown", event => {
   }
 });
 
-// TODO: When wrapping, should just wrap around head
-// TODO: Ensure tail doesn't wrap out of bounds
 function updateSnake(previous) {
   const row = Math.ceil(previous / gameState.numberOfRows);
   let updated;
@@ -187,8 +185,7 @@ function updateSnake(previous) {
         (updated % gameState.numberOfColumns);
     }
   } else if (gameState.direction === directions.down) {
-    updated =
-      row * gameState.numberOfColumns + (previous % gameState.numberOfColumns);
+    updated = previous + gameState.numberOfColumns;
     if (updated / gameState.numberOfRows > gameState.numberOfRows)
       updated = previous % gameState.numberOfColumns;
   } else if (gameState.direction === directions.left) {
