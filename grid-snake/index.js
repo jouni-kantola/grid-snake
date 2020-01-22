@@ -1,6 +1,7 @@
 const start = document.querySelector("#start");
 const grid = document.querySelector(".grid");
 const score = document.querySelector(".score");
+let gameloop;
 
 const snakeHeadCssClass = "head";
 const snakeTailCssClass = "tail";
@@ -81,7 +82,7 @@ const game = () => {
   // TODO: Ensure tail doesn't collide
   gameState.snake.push(gameState.head - 1);
 
-  const intervalId = setInterval(() => {
+  gameloop = setInterval(() => {
     requestAnimationFrame(() => {
       cells[gameState.head].classList.remove(snakeHeadCssClass);
       cells[gameState.head].classList.remove("right");
@@ -103,7 +104,7 @@ const game = () => {
 
       if (gameState.stops.includes(gameState.head)) {
         grid.classList.add("game-over");
-        clearInterval(intervalId);
+        clearInterval(gameloop);
       } else if (gameState.hearts.includes(gameState.head)) {
         cells[gameState.head].classList.remove(heartCssClass);
         gameState.hearts = gameState.hearts.filter(
@@ -114,7 +115,7 @@ const game = () => {
 
         if (!gameState.hearts.length) {
           grid.classList.add("level-clear");
-          clearInterval(intervalId);
+          clearInterval(gameloop);
         }
       }
 
@@ -128,10 +129,12 @@ const game = () => {
 start.addEventListener("click", () => {
   gameState.numberOfColumns = +document.querySelector("#columns").value;
   gameState.numberOfRows = +document.querySelector("#rows").value;
+  gameState.snake = [];
   gameState.hearts = [];
   gameState.stops = [];
   gameState.direction = directions.right;
   gameState.score = 0;
+  clearInterval(gameloop);
 
   const cells = new Array(gameState.numberOfCells)
     .fill(document.createElement("span"))
@@ -144,6 +147,7 @@ start.addEventListener("click", () => {
   requestAnimationFrame(() => {
     grid.innerHTML = "";
     grid.classList.remove("game-over");
+    grid.classList.remove("level-clear");
     grid.style.gridTemplateColumns = `repeat(${gameState.numberOfColumns}, 2rem)`;
     cells.forEach(cell => {
       grid.appendChild(cell);
