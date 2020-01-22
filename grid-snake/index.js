@@ -66,6 +66,7 @@ const game = () => {
       cells[heart].classList.add(cssClass);
     });
 
+  //TODO: Only one heart can be on a one-way street
   new Array(levelConfig[gameState.level].stops).fill("stop").forEach(_ => {
     const stop = ensureFree(0, gameState.numberOfCells, [
       ...gameState.hearts,
@@ -75,6 +76,9 @@ const game = () => {
     cells[stop].classList.add("stop");
   });
 
+  // TODO: Cannot start on the left (even if wrapping) nor right of a stop
+  // If would start on left, would directly collide
+  // If would start on right, tail would collide (should also consider tail's length)
   gameState.snake.push(
     ensureFree(1, gameState.numberOfCells, [
       ...gameState.hearts,
@@ -82,7 +86,6 @@ const game = () => {
     ])
   );
 
-  // TODO: Ensure tail doesn't collide
   gameState.snake.push(gameState.head - 1);
 
   gameloop = setInterval(() => {
