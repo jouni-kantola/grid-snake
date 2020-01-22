@@ -30,7 +30,8 @@ let gameState = {
     return this.snake[0];
   },
   get tail() {
-    const tailLength = this.levelConfig.hearts - this.hearts.length + 1;
+    const tailLength =
+      this.levelConfig.hearts - this.hearts.length + this.level;
     return this.snake.slice(1, tailLength + 1);
   },
   get levelConfig() {
@@ -51,12 +52,23 @@ const ensureFree = (min, max, alreadyTaken = []) => {
 };
 
 const game = () => {
+  grid.classList.remove("level-clear");
+  gameState.hearts = [];
+  gameState.stops = [];
   const cells = grid.querySelectorAll(".cell");
+  cells.forEach(cell => {
+    cell.classList.remove("heart");
+    cell.classList.remove("stop");
+  });
 
   new Array(gameState.levelConfig.hearts)
     .fill(heartCssClass)
     .forEach(cssClass => {
-      const heart = ensureFree(0, gameState.numberOfCells, gameState.hearts);
+      const heart = ensureFree(0, gameState.numberOfCells, [
+        gameState.head,
+        ...gameState.tail,
+        gameState.hearts
+      ]);
       gameState.hearts.push(heart);
       cells[heart].classList.add(cssClass);
     });
@@ -64,6 +76,8 @@ const game = () => {
   //TODO: Only one heart can be on a one-way street
   new Array(gameState.levelConfig.stops).fill("stop").forEach(_ => {
     const stop = ensureFree(0, gameState.numberOfCells, [
+      gameState.head,
+      ...gameState.tail,
       ...gameState.hearts,
       ...gameState.stops
     ]);
@@ -74,14 +88,16 @@ const game = () => {
   // TODO: Cannot start on the left (even if wrapping) nor right of a stop
   // If would start on left, would directly collide
   // If would start on right, tail would collide (should also consider tail's length)
-  gameState.snake.push(
-    ensureFree(1, gameState.numberOfCells, [
-      ...gameState.hearts,
-      ...gameState.stops
-    ])
-  );
+  if (gameState.level === 1) {
+    gameState.snake.push(
+      ensureFree(1, gameState.numberOfCells, [
+        ...gameState.hearts,
+        ...gameState.stops
+      ])
+    );
 
-  gameState.snake.push(gameState.head - 1);
+    gameState.snake.push(gameState.head - 1);
+  }
 
   gameloop = setInterval(() => {
     requestAnimationFrame(() => {
@@ -96,15 +112,6 @@ const game = () => {
 
       gameState.snake.unshift(updateSnake(gameState.head));
 
-      const directionCssClass =
-        gameState.direction === directions.right
-          ? "right"
-          : gameState.direction === directions.up
-          ? "up"
-          : gameState.direction === directions.down
-          ? "down"
-          : "left";
-
       if (
         gameState.stops.includes(gameState.head) ||
         gameState.tail.includes(gameState.head)
@@ -118,30 +125,42 @@ const game = () => {
         );
         gameState.score += gameState.levelConfig.score;
         score.textContent = gameState.score;
-
-        if (!gameState.hearts.length) {
-          grid.classList.add("level-clear");
-          clearInterval(gameloop);
-        }
       }
+
+      const directionCssClass =
+        gameState.direction === directions.right
+          ? "right"
+          : gameState.direction === directions.up
+          ? "up"
+          : gameState.direction === directions.down
+          ? "down"
+          : "left";
 
       cells[gameState.head].classList.add(snakeHeadCssClass);
       cells[gameState.head].classList.add(directionCssClass);
       gameState.tail.forEach(index =>
         cells[index].classList.add(snakeTailCssClass)
       );
+
+      if (!gameState.hearts.length) {
+        grid.classList.add("level-clear");
+        clearInterval(gameloop);
+        gameState.level++;
+        game();
+      }
     });
   }, gameState.levelConfig.speed);
 };
 
 start.addEventListener("click", () => {
+  grid.classList.remove("game-over");
   gameState.numberOfColumns = +document.querySelector("#columns").value;
   gameState.numberOfRows = +document.querySelector("#rows").value;
+  gameState.level = 1;
   gameState.snake = [];
-  gameState.hearts = [];
-  gameState.stops = [];
   gameState.direction = directions.right;
   gameState.score = 0;
+
   clearInterval(gameloop);
 
   const cells = new Array(gameState.numberOfCells)
@@ -154,8 +173,6 @@ start.addEventListener("click", () => {
 
   requestAnimationFrame(() => {
     grid.innerHTML = "";
-    grid.classList.remove("game-over");
-    grid.classList.remove("level-clear");
     grid.style.gridTemplateColumns = `repeat(${gameState.numberOfColumns}, 2rem)`;
     cells.forEach(cell => {
       grid.appendChild(cell);
@@ -193,8 +210,9 @@ function updateSnake(previous) {
     }
     case directions.up: {
       const updated = previous - gameState.numberOfColumns;
-      return updated <= 0
-        ? gameState.numberOfRows * gameState.numberOfColumns +
+      return updated < 0
+        ? gameState.numberOfRows * gameState.numberOfColumns -
+            gameState.numberOfColumns +
             (updated % gameState.numberOfColumns)
         : updated;
     }
