@@ -14,19 +14,6 @@ const directions = {
   left: "ArrowLeft"
 };
 
-const levelConfig = {
-  1: {
-    hearts: 2,
-    score: 10,
-    stops: 2
-  },
-  2: {
-    hearts: 3,
-    score: 20,
-    stops: 3
-  }
-};
-
 let gameState = {
   numberOfColumns: 0,
   numberOfRows: 0,
@@ -43,8 +30,14 @@ let gameState = {
     return this.snake[0];
   },
   get tail() {
-    const tailLength = levelConfig[this.level].hearts - this.hearts.length + 1;
+    const tailLength = this.levelConfig.hearts - this.hearts.length + 1;
     return this.snake.slice(1, tailLength + 1);
+  },
+  get levelConfig() {
+    const score = this.level * 10;
+    const hearts = this.level + 1;
+    const stops = this.level + 1;
+    return { score, hearts, stops };
   }
 };
 
@@ -58,7 +51,7 @@ const ensureFree = (min, max, alreadyTaken = []) => {
 const game = () => {
   const cells = grid.querySelectorAll(".cell");
 
-  new Array(levelConfig[gameState.level].hearts)
+  new Array(gameState.levelConfig.hearts)
     .fill(heartCssClass)
     .forEach(cssClass => {
       const heart = ensureFree(0, gameState.numberOfCells, gameState.hearts);
@@ -67,7 +60,7 @@ const game = () => {
     });
 
   //TODO: Only one heart can be on a one-way street
-  new Array(levelConfig[gameState.level].stops).fill("stop").forEach(_ => {
+  new Array(gameState.levelConfig.stops).fill("stop").forEach(_ => {
     const stop = ensureFree(0, gameState.numberOfCells, [
       ...gameState.hearts,
       ...gameState.stops
@@ -121,7 +114,7 @@ const game = () => {
         gameState.hearts = gameState.hearts.filter(
           heart => heart !== gameState.head
         );
-        gameState.score += levelConfig[gameState.level].score;
+        gameState.score += gameState.levelConfig.score;
         score.textContent = gameState.score;
 
         if (!gameState.hearts.length) {
