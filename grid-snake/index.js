@@ -107,7 +107,10 @@ const game = () => {
           ? "down"
           : "left";
 
-      if (gameState.stops.includes(gameState.head)) {
+      if (
+        gameState.stops.includes(gameState.head) ||
+        gameState.tail.includes(gameState.head)
+      ) {
         grid.classList.add("game-over");
         clearInterval(gameloop);
       } else if (gameState.hearts.includes(gameState.head)) {
