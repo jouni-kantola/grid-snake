@@ -37,7 +37,9 @@ let gameState = {
     const score = this.level * 10;
     const hearts = this.level + 1;
     const stops = this.level + 1;
-    return { score, hearts, stops };
+    const levelSpeeds = [500, 450, 400, 350, 300, 250, 200, 150, 100];
+    const speed = levelSpeeds[this.level - 1] || levelSpeeds.unshift();
+    return { score, hearts, stops, speed };
   }
 };
 
@@ -129,7 +131,7 @@ const game = () => {
         cells[index].classList.add(snakeTailCssClass)
       );
     });
-  }, 400);
+  }, gameState.levelConfig.speed);
 };
 
 start.addEventListener("click", () => {
