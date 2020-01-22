@@ -14,6 +14,19 @@ const directions = {
   left: "ArrowLeft"
 };
 
+const levelConfig = {
+  1: {
+    hearts: 2,
+    score: 10,
+    stops: 2
+  },
+  2: {
+    hearts: 3,
+    score: 20,
+    stops: 3
+  }
+};
+
 let gameState = {
   numberOfColumns: 0,
   numberOfRows: 0,
@@ -27,21 +40,11 @@ let gameState = {
   score: 0,
   snake: [],
   get head() {
-    const [head, ...tail] = this.snake;
-    return head;
-  }
-};
-
-const levelConfig = {
-  1: {
-    hearts: 2,
-    score: 10,
-    stops: 2
+    return this.snake[0];
   },
-  2: {
-    hearts: 3,
-    score: 20,
-    stops: 3
+  get tail() {
+    const tailLength = levelConfig[this.level].hearts - this.hearts.length + 1;
+    return this.snake.slice(1, tailLength + 1);
   }
 };
 
@@ -89,7 +92,9 @@ const game = () => {
       cells[gameState.head].classList.remove("up");
       cells[gameState.head].classList.remove("down");
       cells[gameState.head].classList.remove("left");
-      cells[gameState.snake[1]].classList.remove(snakeTailCssClass);
+      gameState.tail.forEach(index =>
+        cells[index].classList.remove(snakeTailCssClass)
+      );
 
       gameState.snake.unshift(updateSnake(gameState.head));
 
@@ -121,7 +126,9 @@ const game = () => {
 
       cells[gameState.head].classList.add(snakeHeadCssClass);
       cells[gameState.head].classList.add(directionCssClass);
-      cells[gameState.snake[1]].classList.add(snakeTailCssClass);
+      gameState.tail.forEach(index =>
+        cells[index].classList.add(snakeTailCssClass)
+      );
     });
   }, 400);
 };
