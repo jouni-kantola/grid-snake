@@ -167,16 +167,16 @@ start.addEventListener("click", () => {
 
 window.addEventListener("keydown", event => {
   switch (event.key) {
-    case "ArrowLeft":
+    case directions.left:
       gameState.direction = directions.left;
       break;
-    case "ArrowUp":
+    case directions.up:
       gameState.direction = directions.up;
       break;
-    case "ArrowRight":
+    case directions.right:
       gameState.direction = directions.right;
       break;
-    case "ArrowDown":
+    case directions.down:
       gameState.direction = directions.down;
       break;
   }
