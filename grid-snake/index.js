@@ -15,7 +15,9 @@ const directions = {
 };
 
 const Snake = (numberOfColumns, numberOfRows) => {
+  let tailLength = 1;
   return {
+    tailLength,
     move: (from, direction) => {
       switch (direction) {
         case directions.left: {
@@ -62,13 +64,12 @@ let gameState = {
   stops: [],
   score: 0,
   snake: [],
+  tailLength: 0,
   get head() {
     return this.snake[0];
   },
   get tail() {
-    const tailLength =
-      this.levelConfig.hearts - this.hearts.length + this.level;
-    return this.snake.slice(1, tailLength + 1);
+    return this.snake.slice(1, this.tailLength + 1);
   },
   get levelConfig() {
     const score = this.level * 10;
@@ -159,6 +160,7 @@ const game = snake => {
         gameState.hearts = gameState.hearts.filter(
           heart => heart !== gameState.head
         );
+        gameState.tailLength++;
         gameState.score += gameState.levelConfig.score;
         score.textContent = gameState.score;
       }
@@ -194,6 +196,7 @@ start.addEventListener("click", () => {
   gameState.numberOfRows = +document.querySelector("#rows").value;
   gameState.level = 1;
   gameState.snake = [];
+  gameState.tailLength = 1;
   gameState.direction = directions.right;
   gameState.score = 0;
 
