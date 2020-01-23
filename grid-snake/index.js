@@ -211,8 +211,7 @@ function updateSnake(previous) {
     case directions.up: {
       const updated = previous - gameState.numberOfColumns;
       return updated < 0
-        ? gameState.numberOfRows * gameState.numberOfColumns -
-            gameState.numberOfColumns +
+        ? gameState.numberOfRows * gameState.numberOfColumns +
             (updated % gameState.numberOfColumns)
         : updated;
     }
