@@ -15,14 +15,12 @@ const directions = {
 };
 
 const Snake = (numberOfColumns, numberOfRows) => {
-  let tailLength = 1;
   return {
-    tailLength,
     move: (from, direction) => {
       switch (direction) {
         case directions.left: {
-          const row = Math.ceil(from / numberOfRows);
           const updated = from - 1;
+          const row = Math.ceil(updated / numberOfColumns);
           return from % numberOfColumns === 0
             ? row * numberOfColumns + numberOfColumns - 1
             : updated;
@@ -37,9 +35,9 @@ const Snake = (numberOfColumns, numberOfRows) => {
         }
         case directions.down: {
           const updated = from + numberOfColumns;
-          return updated / numberOfRows >= numberOfRows
-            ? from % numberOfColumns
-            : updated;
+          const isOutOfBounds =
+            Math.ceil(updated / numberOfColumns) > numberOfRows;
+          return isOutOfBounds ? from % numberOfColumns : updated;
         }
         default: {
           let updated = from + 1;
