@@ -212,7 +212,7 @@ start.addEventListener("click", () => {
 
   requestAnimationFrame(() => {
     grid.innerHTML = "";
-    grid.style.gridTemplateColumns = `repeat(${gameState.numberOfColumns}, 2rem)`;
+    grid.style.gridTemplateColumns = `repeat(${gameState.numberOfColumns}, 1fr)`;
     cells.forEach(cell => {
       grid.appendChild(cell);
     });
