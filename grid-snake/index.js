@@ -28,12 +28,14 @@ const Snake = (numberOfColumns, numberOfRows) => {
         case directions.up: {
           const updated = from - numberOfColumns;
           return updated < 0
-            ? numberOfRows * numberOfColumns + (updated % numberOfColumns)
+            ? numberOfRows * numberOfColumns +
+                (from % numberOfColumns) -
+                numberOfColumns
             : updated;
         }
         case directions.down: {
           const updated = from + numberOfColumns;
-          return updated / numberOfRows > numberOfRows
+          return updated / numberOfRows >= numberOfRows
             ? from % numberOfColumns
             : updated;
         }
