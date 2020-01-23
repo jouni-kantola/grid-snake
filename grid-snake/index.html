@@ -27,6 +27,10 @@
             content: "Score: ";
         }
 
+        .level::before {
+            content: "Level: ";
+        }
+
         .grid {
             display: grid;
             grid-gap: 4px;
@@ -208,6 +212,7 @@
         <button id="start">Start</button>
     </section>
     <div class="score">0</div>
+    <div class="level">1</div>
     <section class="grid"></section>
     <script src="index.js"></script>
 </body>

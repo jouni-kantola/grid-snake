@@ -1,6 +1,7 @@
 const start = document.querySelector("#start");
 const grid = document.querySelector(".grid");
 const score = document.querySelector(".score");
+const level = document.querySelector(".level");
 let gameloop;
 
 const snakeHeadCssClass = "head";
@@ -136,6 +137,7 @@ const game = snake => {
 
   gameloop = setInterval(() => {
     requestAnimationFrame(() => {
+      level.textContent = gameState.level;
       cells[gameState.head].classList.remove(snakeHeadCssClass);
       cells[gameState.head].classList.remove("right");
       cells[gameState.head].classList.remove("up");
