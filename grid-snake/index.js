@@ -14,6 +14,40 @@ const directions = {
   left: "ArrowLeft"
 };
 
+const Snake = (numberOfColumns, numberOfRows) => {
+  return {
+    move: (from, direction) => {
+      switch (direction) {
+        case directions.left: {
+          const row = Math.ceil(from / numberOfRows);
+          const updated = from - 1;
+          return from % numberOfColumns === 0
+            ? row * numberOfColumns + numberOfColumns - 1
+            : updated;
+        }
+        case directions.up: {
+          const updated = from - numberOfColumns;
+          return updated < 0
+            ? numberOfRows * numberOfColumns + (updated % numberOfColumns)
+            : updated;
+        }
+        case directions.down: {
+          const updated = from + numberOfColumns;
+          return updated / numberOfRows > numberOfRows
+            ? from % numberOfColumns
+            : updated;
+        }
+        default: {
+          let updated = from + 1;
+          return updated % numberOfColumns === 0
+            ? updated - numberOfColumns
+            : updated;
+        }
+      }
+    }
+  };
+};
+
 let gameState = {
   numberOfColumns: 0,
   numberOfRows: 0,
@@ -51,7 +85,7 @@ const ensureFree = (min, max, alreadyTaken = []) => {
     : ensureFree(min, max, alreadyTaken);
 };
 
-const game = () => {
+const game = snake => {
   grid.classList.remove("level-clear");
   gameState.hearts = [];
   gameState.stops = [];
@@ -110,7 +144,7 @@ const game = () => {
         cells[index].classList.remove(snakeTailCssClass)
       );
 
-      gameState.snake.unshift(updateSnake(gameState.head));
+      gameState.snake.unshift(snake.move(gameState.head, gameState.direction));
 
       if (
         gameState.stops.includes(gameState.head) ||
@@ -146,7 +180,7 @@ const game = () => {
         grid.classList.add("level-clear");
         clearInterval(gameloop);
         gameState.level++;
-        game();
+        game(snake);
       }
     });
   }, gameState.levelConfig.speed);
@@ -178,7 +212,9 @@ start.addEventListener("click", () => {
       grid.appendChild(cell);
     });
 
-    game();
+    const snake = Snake(gameState.numberOfColumns, gameState.numberOfRows);
+
+    game(snake);
   });
 });
 
@@ -198,34 +234,3 @@ window.addEventListener("keydown", event => {
       break;
   }
 });
-
-function updateSnake(previous) {
-  switch (gameState.direction) {
-    case directions.left: {
-      const row = Math.ceil(previous / gameState.numberOfRows);
-      const updated = previous - 1;
-      return previous % gameState.numberOfColumns === 0
-        ? row * gameState.numberOfColumns + gameState.numberOfColumns - 1
-        : updated;
-    }
-    case directions.up: {
-      const updated = previous - gameState.numberOfColumns;
-      return updated < 0
-        ? gameState.numberOfRows * gameState.numberOfColumns +
-            (updated % gameState.numberOfColumns)
-        : updated;
-    }
-    case directions.down: {
-      const updated = previous + gameState.numberOfColumns;
-      return updated / gameState.numberOfRows > gameState.numberOfRows
-        ? previous % gameState.numberOfColumns
-        : updated;
-    }
-    default: {
-      let updated = previous + 1;
-      return updated % gameState.numberOfColumns === 0
-        ? updated - gameState.numberOfColumns
-        : updated;
-    }
-  }
-}
