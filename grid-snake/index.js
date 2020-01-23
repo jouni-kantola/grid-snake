@@ -2,6 +2,7 @@ const start = document.querySelector("#start");
 const grid = document.querySelector(".grid");
 const score = document.querySelector(".score");
 const level = document.querySelector(".level");
+let useHip = true;
 let gameloop;
 
 const snakeHeadCssClass = "head";
@@ -75,7 +76,8 @@ let gameState = {
     const hearts = this.level + 1;
     const stops = this.level + 1;
     const levelSpeeds = [500, 450, 400, 350, 300, 250, 200, 150, 100];
-    const speed = levelSpeeds[this.level - 1] || levelSpeeds.unshift();
+    const speed =
+      levelSpeeds[this.level - 1] || levelSpeeds[levelSpeeds.length - 1];
     return { score, hearts, stops, speed };
   }
 };
@@ -97,7 +99,7 @@ const game = snake => {
     cell.classList.remove("stop");
   });
 
-  new Array(gameState.levelConfig.hearts)
+  new Array(useHip ? gameState.levelConfig.hearts : 1)
     .fill(heartCssClass)
     .forEach(cssClass => {
       const heart = ensureFree(0, gameState.numberOfCells, [
@@ -110,16 +112,17 @@ const game = snake => {
     });
 
   //TODO: Only one heart can be on a one-way street
-  new Array(gameState.levelConfig.stops).fill("stop").forEach(_ => {
-    const stop = ensureFree(0, gameState.numberOfCells, [
-      gameState.head,
-      ...gameState.tail,
-      ...gameState.hearts,
-      ...gameState.stops
-    ]);
-    gameState.stops.push(stop);
-    cells[stop].classList.add("stop");
-  });
+  if (useHip)
+    new Array(gameState.levelConfig.stops).fill("stop").forEach(_ => {
+      const stop = ensureFree(0, gameState.numberOfCells, [
+        gameState.head,
+        ...gameState.tail,
+        ...gameState.hearts,
+        ...gameState.stops
+      ]);
+      gameState.stops.push(stop);
+      cells[stop].classList.add("stop");
+    });
 
   // TODO: Cannot start on the left (even if wrapping) nor right of a stop
   // If would start on left, would directly collide
@@ -191,6 +194,8 @@ const game = snake => {
 };
 
 start.addEventListener("click", () => {
+  useHip =
+    document.querySelector('input[name="game-style"]:checked').value === "hip";
   grid.classList.remove("game-over");
   gameState.numberOfColumns = +document.querySelector("#columns").value;
   gameState.numberOfRows = +document.querySelector("#rows").value;
