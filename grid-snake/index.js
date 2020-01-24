@@ -210,6 +210,13 @@ const game = snake => {
 start.addEventListener("click", () => {
   useHip =
     document.querySelector('input[name="game-style"]:checked').value === "hip";
+  if (useHip) {
+    grid.classList.add("hip");
+    grid.classList.remove("vintage");
+  } else {
+    grid.classList.remove("hip");
+    grid.classList.add("vintage");
+  }
   grid.classList.remove("game-over");
   gameState.numberOfColumns = +document.querySelector("#columns").value;
   gameState.numberOfRows = +document.querySelector("#rows").value;

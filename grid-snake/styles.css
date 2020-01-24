@@ -1,44 +1,66 @@
+* {
+  box-sizing: border-box;
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
 body {
   background-color: #f3f1f0;
 }
 
-* {
-  box-sizing: border-box;
-  font-family: sans-serif;
+.game {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto auto auto;
 }
 
 .setup {
+  grid-column-start: span 2;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
+  padding-top: 10px;
 }
 
 .setup * {
   margin-left: 10px;
 }
 
-.score::before {
-  content: "Score: ";
+.level,
+.score {
+  justify-self: center;
+  padding: 10px;
 }
 
 .level::before {
   content: "Level: ";
 }
 
-input[id="vintage"]:checked ~ .grid {
-    border: 4px double #333;
-    border-radius: 5%;
+.score::before {
+  content: "Score: ";
 }
 
 .grid {
+  grid-column-start: span 2;
   display: grid;
   grid-gap: 4px;
-  padding: 1rem;
+  padding: 10px;
+  margin: 10px;
   justify-content: center;
   align-content: center;
   position: relative;
   transition: transform 0.5s ease-out;
+  pointer-events: none;
+}
+
+.grid.vintage {
+  border: 4px double #333;
+  border-radius: 6%;
 }
 
 .grid.game-over {

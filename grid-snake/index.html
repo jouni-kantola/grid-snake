@@ -1,27 +1,33 @@
 <html>
 
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="./styles.css" rel="stylesheet">
 </head>
 
 <body>
-    <label for="columns">Columns</label>
-    <input type="number" name="columns" id="columns" min="5" max="15" value="10" placeholder="Colums">
+    <div class="game">
+        <div class="setup">
+            <label for="columns">Columns</label>
+            <input type="number" name="columns" id="columns" min="5" max="15" value="10" placeholder="Colums">
 
-    <label for="rows">Rows</label>
-    <input type="number" name="rows" id="rows" min="5" max="15" value="10" placeholder="Rows">
+            <label for="rows">Rows</label>
+            <input type="number" name="rows" id="rows" min="5" max="15" value="10" placeholder="Rows">
 
-    <input type="radio" id="vintage" name="game-style" value="vintage">
-    <label for="vintage">Vintage</label>
+            <input type="radio" id="vintage" name="game-style" value="vintage">
+            <label for="vintage">Vintage</label>
 
-    <input type="radio" id="hip" name="game-style" value="hip" checked>
-    <label for="hip">Hip</label>
+            <input type="radio" id="hip" name="game-style" value="hip" checked>
+            <label for="hip">Hip</label>
 
-    <button id="start">Start</button>
+            <button id="start">Start</button>
+        </div>
 
-    <div class="score">0</div>
-    <div class="level">1</div>
-    <section class="grid"></section>
+        <div class="level">1</div>
+        <div class="score">0</div>
+
+        <div class="grid"></div>
+    </div>
     <script src="index.js"></script>
 </body>
 
