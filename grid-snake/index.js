@@ -23,13 +23,19 @@ const Snake = (numberOfColumns, numberOfRows) => {
         case directions.left: {
           const updated = from - 1;
           const row = Math.ceil(updated / numberOfColumns);
-          return from % numberOfColumns === 0
+          const wrapAround = from % numberOfColumns === 0;
+          if (wrapAround && !useHip) {
+            return false;
+          }
+          return wrapAround
             ? row * numberOfColumns + numberOfColumns - 1
             : updated;
         }
         case directions.up: {
           const updated = from - numberOfColumns;
-          return updated < 0
+          const wrapAround = updated < 0;
+          if (wrapAround && !useHip) return false;
+          return wrapAround
             ? numberOfRows * numberOfColumns +
                 (from % numberOfColumns) -
                 numberOfColumns
@@ -37,15 +43,16 @@ const Snake = (numberOfColumns, numberOfRows) => {
         }
         case directions.down: {
           const updated = from + numberOfColumns;
-          const isOutOfBounds =
+          const wrapAround =
             Math.ceil(updated / numberOfColumns) > numberOfRows;
-          return isOutOfBounds ? from % numberOfColumns : updated;
+          if (wrapAround && !useHip) return false;
+          return wrapAround ? from % numberOfColumns : updated;
         }
         default: {
           let updated = from + 1;
-          return updated % numberOfColumns === 0
-            ? updated - numberOfColumns
-            : updated;
+          const wrapAround = updated % numberOfColumns === 0;
+          if (wrapAround && !useHip) return false;
+          return wrapAround ? updated - numberOfColumns : updated;
         }
       }
     }
@@ -150,7 +157,12 @@ const game = snake => {
         cells[index].classList.remove(snakeTailCssClass)
       );
 
-      gameState.snake.unshift(snake.move(gameState.head, gameState.direction));
+      const next = snake.move(gameState.head, gameState.direction);
+      if (next !== false) gameState.snake.unshift(next);
+      else {
+        grid.classList.add("game-over");
+        clearInterval(gameloop);
+      }
 
       if (
         gameState.stops.includes(gameState.head) ||
