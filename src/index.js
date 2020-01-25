@@ -119,7 +119,6 @@ const game = snake => {
       cells[heart].classList.add(cssClass);
     });
 
-  //TODO: Only one heart can be on a one-way street
   if (useHip)
     new Array(gameState.levelConfig.stops).fill("stop").forEach(_ => {
       const stop = ensureFree(0, gameState.numberOfCells, [
