@@ -45,6 +45,7 @@ body {
 
 .setup .activation {
   display: flex;
+  margin-top: 2px;
 }
 
 .setup #start {
@@ -135,7 +136,6 @@ label[for="configuration-toggle"] {
   color: #fff;
   background-color: #333;
   font-family: "Major Mono Display", monospace;
-  font-size: 1.1rem;
 }
 
 .level::before {
@@ -318,12 +318,13 @@ label[for="configuration-toggle"] {
     margin-bottom: 0;
   }
 
-  .grid-size {
+  .setup .grid-size {
     align-self: center;
   }
 
-  .activation {
+  .setup .activation {
     margin-left: 30px;
+    margin-top: 0;
   }
 
   .configuration-toggle:checked ~ .configuration {
@@ -332,7 +333,7 @@ label[for="configuration-toggle"] {
   }
 
   label[for="configuration-toggle"] {
-    top: 9px;
+    top: 10px;
   }
 
   .setup #start {
