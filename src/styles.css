@@ -194,10 +194,14 @@ label[for="configuration-toggle"] {
 .head.down::after {
   position: absolute;
   content: "";
-  right: 7px;
-  height: 2px;
-  width: 7px;
+  height: 10%;
+  width: 20%;
   background: #333;
+  margin-top: 0;
+  left: 60%;
+  border-radius: 100%;
+  z-index: 1;
+  transition: top 0.7s ease-out, right 0.7s ease-out, left 0.7s ease-out, bottom 0.7s ease-out;
 }
 
 .head.right:before {
@@ -246,6 +250,34 @@ label[for="configuration-toggle"] {
 .head.down::after {
   right: 20%;
   transform: rotate(135deg);
+}
+
+.grid.game-over .head.up.stop:before,
+.grid.game-over .head.up.stop:after {
+  top: -30%;
+}
+
+.grid.game-over .head.right.stop:before,
+.grid.game-over .head.right.stop:after {
+  left: 100%;
+}
+
+.grid.game-over .head.down.stop:before,
+.grid.game-over .head.down.stop:after {
+  bottom: -30%;
+}
+
+.grid.game-over .head.left.stop:before,
+.grid.game-over .head.left.stop:after {
+  left: -30%;
+}
+
+.grid.game-over .head.left.stop:before {
+  transform: rotate(135deg);
+}
+
+.grid.game-over .head.left.stop:after {
+  transform: rotate(45deg);
 }
 
 .tail {
@@ -303,7 +335,7 @@ label[for="configuration-toggle"] {
 }
 
 .grid.game-over .head {
-  background: brown;
+  background: #666;
 }
 
 @media (min-width: 375px) {
