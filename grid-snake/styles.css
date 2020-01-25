@@ -23,9 +23,70 @@ body {
 .setup {
   grid-column-start: span 2;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-top: 10px;
+  padding: 10px 0 16px 6px;
+}
+
+.setup label,
+.setup input,
+.setup button {
+  font-family: "Major Mono Display", monospace;
+  background-color: #f3f1f0;
+  border: none;
+  font-size: 1rem;
+}
+
+.setup label {
+  margin-left: 10px;
+}
+
+.setup #start {
+  border: 1px solid #333;
+  padding: 10px;
+  margin-left: 30px;
+}
+
+.setup #start:hover {
+  background-color: #333;
+  color: #fff;
+}
+
+.setup input[id="columns"],
+.setup input[id="rows"] {
+  border-bottom: 1px solid #666;
+  text-align: center;
+  font-family: sans-serif;
+  padding: 0 0 3px 12px;
+}
+
+.setup input[id="hip"],
+.setup input[id="vintage"] {
+  display: none;
+}
+
+.setup label[for="hip"],
+.setup label[for="vintage"] {
+  margin-left: 10px;
+}
+
+.setup label[for="vintage"] {
+  margin-left: 20px;
+}
+
+.setup label[for="hip"],
+.setup label[for="vintage"] {
+  padding-bottom: 4px;
+}
+
+.setup input[id="hip"]:checked + label,
+.setup input[id="vintage"]:checked + label,
+.setup label[for="hip"]:hover,
+.setup label[for="vintage"]:hover {
+  font-style: italic;
+}
+
+.setup input[id="hip"]:checked + label,
+.setup input[id="vintage"]:checked + label {
+  border-bottom: solid 1px #333;
 }
 
 .configuration-toggle {
@@ -34,8 +95,8 @@ body {
 
 label[for="configuration-toggle"] {
   position: absolute;
-  top: 6px;
-  right: 6px;
+  top: 8px;
+  right: 8px;
   font-size: 1.5rem;
   border: 1px solid #555;
   border-radius: 100%;
@@ -64,16 +125,21 @@ label[for="configuration-toggle"] {
 
 .level,
 .score {
-  justify-self: center;
+  width: 100%;
   padding: 10px;
+  padding-left: 16px;
+  color: #fff;
+  background-color: #333;
+  font-size: 1.2rem;
+  font-family: "Major Mono Display", monospace;
 }
 
 .level::before {
-  content: "Level: ";
+  content: "level: ";
 }
 
 .score::before {
-  content: "Score: ";
+  content: "score: ";
 }
 
 .grid {
