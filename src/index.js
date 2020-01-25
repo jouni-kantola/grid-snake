@@ -83,7 +83,6 @@ let gameState = {
     const hearts = this.level + 1;
     const stops = this.level + 1;
 
-    // TODO: Base level speeds on grid size
     const levelSpeeds = [500, 450, 400, 350, 300, 250, 200, 150, 100];
     const speed =
       levelSpeeds[this.level - 1] || levelSpeeds[levelSpeeds.length - 1];
