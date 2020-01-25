@@ -203,6 +203,7 @@ const game = snake => {
 };
 
 start.addEventListener("click", () => {
+  document.activeElement.blur();
   useHip =
     document.querySelector('input[name="game-style"]:checked').value === "hip";
   if (useHip) {
