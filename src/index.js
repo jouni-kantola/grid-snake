@@ -131,9 +131,6 @@ const game = snake => {
       cells[stop].classList.add("stop");
     });
 
-  // TODO: Cannot start on the left (even if wrapping) nor right of a stop
-  // If would start on left, would directly collide
-  // If would start on right, tail would collide (should also consider tail's length)
   if (gameState.level === 1) {
     gameState.snake.push(
       ensureFree(1, gameState.numberOfCells, [
