@@ -23,7 +23,7 @@ body {
 .setup {
   grid-column-start: span 2;
   display: flex;
-  padding: 10px 0 16px 6px;
+  padding: 8px 0 8px 6px;
 }
 
 .setup label,
@@ -74,19 +74,21 @@ body {
 
 .setup label[for="hip"],
 .setup label[for="vintage"] {
-  padding-bottom: 4px;
+  padding: 10px;
+  border: 1px solid #333;
 }
 
-.setup input[id="hip"]:checked + label,
-.setup input[id="vintage"]:checked + label,
 .setup label[for="hip"]:hover,
-.setup label[for="vintage"]:hover {
-  font-style: italic;
+.setup label[for="vintage"]:hover,
+.setup input[id="hip"]:checked + label,
+.setup input[id="vintage"]:checked + label {
+  background-color: #333;
+  color: #fff;
 }
 
 .setup input[id="hip"]:checked + label,
 .setup input[id="vintage"]:checked + label {
-  border-bottom: solid 1px #333;
+  font-style: italic;
 }
 
 .configuration-toggle {
@@ -95,7 +97,6 @@ body {
 
 label[for="configuration-toggle"] {
   position: absolute;
-  top: 8px;
   right: 8px;
   font-size: 1.5rem;
   border: 1px solid #555;
@@ -103,8 +104,8 @@ label[for="configuration-toggle"] {
   height: 2.4rem;
   width: 2.4rem;
   text-align: center;
-  background-color: #daa942;
-  color: #111;
+  background-color: #333;
+  color: #fff;
 }
 
 .configuration-toggle ~ label[for="configuration-toggle"]:before {
@@ -274,7 +275,7 @@ label[for="configuration-toggle"] {
 .heart:after {
   position: absolute;
   content: "";
-  left: 50%;
+  left: 51%;
   top: 10%;
   width: 52%;
   height: 80%;
