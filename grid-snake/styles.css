@@ -157,7 +157,7 @@ label[for="configuration-toggle"] {
 
 .grid.vintage {
   border: 4px double #333;
-  border-radius: 6%;
+  border-radius: 5px;
 }
 
 .grid.game-over {
