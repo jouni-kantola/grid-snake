@@ -5,6 +5,10 @@
   padding: 0;
 }
 
+html {
+  font-size: 14px;
+}
+
 html,
 body {
   height: 100%;
@@ -23,7 +27,7 @@ body {
 .setup {
   grid-column-start: span 2;
   display: flex;
-  padding: 8px 0 8px 6px;
+  padding: 10px 0;
 }
 
 .setup label,
@@ -39,10 +43,15 @@ body {
   margin-left: 10px;
 }
 
+.setup .activation {
+  display: flex;
+}
+
 .setup #start {
-  border: 1px solid #333;
+  border: 1px solid #666;
   padding: 10px;
-  margin-left: 30px;
+  margin-left: auto;
+  margin-right: 10px;
 }
 
 .setup #start:hover {
@@ -52,10 +61,11 @@ body {
 
 .setup input[id="columns"],
 .setup input[id="rows"] {
-  border-bottom: 1px solid #666;
+  border: 1px solid #666;
   text-align: center;
   font-family: sans-serif;
-  padding: 0 0 3px 12px;
+  padding: 3px;
+  margin: 0 0 8px 5px;
 }
 
 .setup input[id="hip"],
@@ -65,17 +75,8 @@ body {
 
 .setup label[for="hip"],
 .setup label[for="vintage"] {
-  margin-left: 10px;
-}
-
-.setup label[for="vintage"] {
-  margin-left: 20px;
-}
-
-.setup label[for="hip"],
-.setup label[for="vintage"] {
   padding: 10px;
-  border: 1px solid #333;
+  border: 1px solid #666;
 }
 
 .setup label[for="hip"]:hover,
@@ -97,9 +98,10 @@ body {
 
 label[for="configuration-toggle"] {
   position: absolute;
+  top: 4px;
   right: 8px;
   font-size: 1.5rem;
-  border: 1px solid #555;
+  border: 1px solid #666;
   border-radius: 100%;
   height: 2.4rem;
   width: 2.4rem;
@@ -121,18 +123,19 @@ label[for="configuration-toggle"] {
 }
 
 .configuration-toggle:checked ~ .configuration {
-  display: block;
+  display: flex;
+  flex-flow: column;
+  width: 100%;
 }
 
 .level,
 .score {
   width: 100%;
   padding: 10px;
-  padding-left: 16px;
   color: #fff;
   background-color: #333;
-  font-size: 1.2rem;
   font-family: "Major Mono Display", monospace;
+  font-size: 1.1rem;
 }
 
 .level::before {
@@ -301,4 +304,38 @@ label[for="configuration-toggle"] {
 
 .grid.game-over .head {
   background: brown;
+}
+
+@media (min-width: 375px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 768px) {
+  .setup input[id="columns"],
+  .setup input[id="rows"] {
+    margin-bottom: 0;
+  }
+
+  .grid-size {
+    align-self: center;
+  }
+
+  .activation {
+    margin-left: 30px;
+  }
+
+  .configuration-toggle:checked ~ .configuration {
+    flex-flow: row;
+    align-self: center;
+  }
+
+  label[for="configuration-toggle"] {
+    top: 9px;
+  }
+
+  .setup #start {
+    margin-left: 40px;
+  }
 }

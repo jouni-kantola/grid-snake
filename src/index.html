@@ -12,19 +12,22 @@
             <input type="checkbox" id="configuration-toggle" class="configuration-toggle" checked>
             <label for="configuration-toggle"></label>
             <div class="configuration">
-                <label for="columns">columns</label>
-                <input type="number" name="columns" id="columns" min="5" max="15" value="20">
+                <div class="grid-size">
+                    <label for="columns">columns</label>
+                    <input type="number" name="columns" id="columns" min="5" max="15" value="20">
 
-                <label for="rows">rows</label>
-                <input type="number" name="rows" id="rows" min="5" max="15" value="20">
+                    <label for="rows">rows</label>
+                    <input type="number" name="rows" id="rows" min="5" max="15" value="20">
+                </div>
+                <div class="activation">
+                    <input type="radio" id="vintage" name="game-style" value="vintage">
+                    <label for="vintage">vintage</label>
 
-                <input type="radio" id="vintage" name="game-style" value="vintage">
-                <label for="vintage">vintage</label>
+                    <input type="radio" id="hip" name="game-style" value="hip" checked>
+                    <label for="hip">hip</label>
 
-                <input type="radio" id="hip" name="game-style" value="hip" checked>
-                <label for="hip">hip</label>
-
-                <button id="start">start</button>
+                    <button id="start">start</button>
+                </div>
             </div>
         </div>
 
