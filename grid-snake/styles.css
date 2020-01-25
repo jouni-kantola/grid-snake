@@ -181,10 +181,6 @@ label[for="configuration-toggle"] {
   background: #daa942;
 }
 
-.head.right {
-  border-radius: 15px 100% 100% 15px;
-}
-
 .head.right::before,
 .head.right::after,
 .head.up::before,
@@ -214,10 +210,6 @@ label[for="configuration-toggle"] {
   top: 30%;
 }
 
-.head.up {
-  border-radius: 100% 100% 15px 15px;
-}
-
 .head.up:before,
 .head.up::after {
   top: 35%;
@@ -233,17 +225,9 @@ label[for="configuration-toggle"] {
   transform: rotate(45deg);
 }
 
-.head.left {
-  border-radius: 100% 15px 15px 100%;
-}
-
 .head.left:before,
 .head.left::after {
   left: 20%;
-}
-
-.head.down {
-  border-radius: 15px 15px 100% 100%;
 }
 
 .head.down:before,
