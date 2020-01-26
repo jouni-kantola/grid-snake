@@ -343,10 +343,12 @@ label[for="configuration-toggle"] {
 
 .game-controls {
   display: none;
-  grid-column-start: span 2;
-  justify-self: center;
   grid-template-columns: repeat(3, 40px);
   grid-template-rows: repeat(3, 40px);
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .game-controls .cross {
