@@ -245,19 +245,37 @@ start.addEventListener("click", () => {
   });
 });
 
+const updateDirection = direction => (gameState.direction = direction);
+
 window.addEventListener("keydown", event => {
   switch (event.key) {
     case directions.left:
-      gameState.direction = directions.left;
+      updateDirection(directions.left);
       break;
     case directions.up:
-      gameState.direction = directions.up;
+      updateDirection(directions.up);
       break;
     case directions.right:
-      gameState.direction = directions.right;
+      updateDirection(directions.right);
       break;
     case directions.down:
-      gameState.direction = directions.down;
+      updateDirection(directions.down);
       break;
   }
+});
+
+document.querySelector(".left").addEventListener("touchstart", event => {
+  updateDirection(directions.left);
+});
+
+document.querySelector(".up").addEventListener("touchstart", event => {
+  updateDirection(directions.up);
+});
+
+document.querySelector(".down").addEventListener("touchstart", event => {
+  updateDirection(directions.down);
+});
+
+document.querySelector(".right").addEventListener("touchstart", event => {
+  updateDirection(directions.right);
 });
