@@ -67,6 +67,7 @@ body {
   font-family: sans-serif;
   padding: 3px;
   margin: 0 0 8px 5px;
+  min-width: 40px;
 }
 
 .setup input[id="hip"],
