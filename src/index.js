@@ -245,7 +245,26 @@ start.addEventListener("click", () => {
   });
 });
 
-const updateDirection = direction => (gameState.direction = direction);
+const updateDirection = direction => {
+  switch (direction) {
+    case directions.left:
+    case directions.right:
+      if (
+        gameState.direction !== directions.left &&
+        gameState.direction !== directions.right
+      )
+        gameState.direction = direction;
+      break;
+    case directions.up:
+    case directions.down:
+      if (
+        gameState.direction !== directions.up &&
+        gameState.direction !== directions.down
+      )
+        gameState.direction = direction;
+      break;
+  }
+};
 
 window.addEventListener("keydown", event => {
   switch (event.key) {
