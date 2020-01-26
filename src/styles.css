@@ -19,6 +19,7 @@ body {
   display: grid;
   grid-template-columns: 50% 50%;
   grid-template-rows: 94px 36px calc(100vh - 270px) 140px;
+  align-items: start;
 }
 
 .setup {
@@ -156,7 +157,6 @@ label[for="configuration-toggle"] {
   padding: 10px;
   margin: 10px;
   justify-content: center;
-  align-content: center;
   position: relative;
   transition: transform 0.5s ease-out;
   pointer-events: none;
