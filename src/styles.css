@@ -21,7 +21,7 @@ body {
 .game {
   display: grid;
   grid-template-columns: 50% 50%;
-  grid-template-rows: auto auto auto 90px;
+  grid-template-rows: auto auto auto 120px;
 }
 
 .setup {
@@ -343,8 +343,8 @@ label[for="configuration-toggle"] {
   display: none;
   grid-column-start: span 2;
   justify-self: center;
-  grid-template-columns: repeat(3, 30px);
-  grid-template-rows: repeat(3, 30px);
+  grid-template-columns: repeat(3, 40px);
+  grid-template-rows: repeat(3, 40px);
 }
 
 .game-controls .cross {
