@@ -5,12 +5,9 @@
   padding: 0;
 }
 
-html {
-  font-size: 14px;
-}
-
 html,
 body {
+  font-size: 16px;
   height: 100%;
 }
 
@@ -21,7 +18,7 @@ body {
 .game {
   display: grid;
   grid-template-columns: 50% 50%;
-  grid-template-rows: auto auto auto 120px;
+  grid-template-rows: 94px 36px calc(100vh - 270px) 140px;
 }
 
 .setup {
@@ -137,6 +134,11 @@ label[for="configuration-toggle"] {
   color: #fff;
   background-color: #333;
   font-family: "Major Mono Display", monospace;
+}
+
+.level::before,
+.score::before {
+  font-size: 0.9rem;
 }
 
 .level::before {
@@ -428,13 +430,11 @@ label[for="configuration-toggle"] {
   border: none;
 }
 
-@media (min-width: 375px) {
-  html {
-    font-size: 16px;
-  }
-}
-
 @media (min-width: 768px) {
+  .game {
+    grid-template-rows: 58px 36px calc(100vh - 234px) 140px;
+  }
+
   .setup input[id="columns"],
   .setup input[id="rows"] {
     margin-bottom: 0;
