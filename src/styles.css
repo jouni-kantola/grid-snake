@@ -18,7 +18,7 @@ body {
 .game {
   display: grid;
   grid-template-columns: 50% 50%;
-  grid-template-rows: 94px 36px calc(100vh - 270px) 140px;
+  grid-template-rows: auto auto auto;
   align-items: start;
 }
 
@@ -433,10 +433,6 @@ label[for="configuration-toggle"] {
 }
 
 @media (min-width: 768px) {
-  .game {
-    grid-template-rows: 58px 36px calc(100vh - 234px) 140px;
-  }
-
   .setup input[id="columns"],
   .setup input[id="rows"] {
     margin-bottom: 0;
