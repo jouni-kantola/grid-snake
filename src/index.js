@@ -44,7 +44,8 @@ const Snake = (numberOfColumns, numberOfRows) => {
         case directions.down: {
           const updated = from + numberOfColumns;
           const wrapAround =
-            Math.ceil(updated / numberOfColumns) > numberOfRows;
+            Math.ceil(updated / numberOfColumns) > numberOfRows ||
+            updated >= numberOfColumns * numberOfRows;
           if (wrapAround && !useHip) return false;
           return wrapAround ? from % numberOfColumns : updated;
         }
