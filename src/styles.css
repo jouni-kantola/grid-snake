@@ -153,7 +153,7 @@ label[for="configuration-toggle"] {
 .grid {
   grid-column-start: span 2;
   display: grid;
-  grid-gap: 4px;
+  grid-gap: 1px;
   padding: 10px;
   margin: 10px;
   justify-content: center;
@@ -163,7 +163,6 @@ label[for="configuration-toggle"] {
 }
 
 .grid.vintage {
-  grid-gap: 2px;
   border: 4px double #333;
   border-radius: 5px;
 }
@@ -463,6 +462,10 @@ label[for="configuration-toggle"] {
 
   .setup #start {
     margin-left: 40px;
+  }
+
+  .grid {
+    grid-gap: 2px;
   }
 }
 
