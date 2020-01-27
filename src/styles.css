@@ -163,6 +163,7 @@ label[for="configuration-toggle"] {
 }
 
 .grid.vintage {
+  grid-gap: 2px;
   border: 4px double #333;
   border-radius: 5px;
 }
@@ -181,6 +182,10 @@ label[for="configuration-toggle"] {
   border-radius: 100%;
   position: relative;
   transition: background-color 0.2s ease-out;
+}
+
+.grid.vintage .cell {
+  border: none;
 }
 
 .head {
@@ -297,9 +302,9 @@ label[for="configuration-toggle"] {
 .heart:after {
   position: absolute;
   content: "";
-  left: 51%;
+  left: 49%;
   top: 10%;
-  width: 52%;
+  width: 50%;
   height: 80%;
   background: #b34159;
   border-radius: 50% 50% 0 0;
