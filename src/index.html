@@ -81,6 +81,20 @@
       <button class="cross left">Left</button>
       <button class="cross center">N/A</button>
     </div>
+    <script>
+        if ("serviceWorker" in navigator) {
+            (async function () {
+                const sw = navigator.serviceWorker;
+
+                try {
+                    const registration = await sw
+                        .register("./sw.js", { scope: "./" });
+                } catch (error) {
+                    console.error("Registration failed with " + error);
+                }
+            })();
+        }
+    </script>
     <script src="./index.js"></script>
   </body>
 </html>
