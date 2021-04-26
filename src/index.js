@@ -74,7 +74,6 @@ let gameState = {
     levelSpeeds: [Infinity, 500, 450, 400, 350, 300, 250, 200, 150, 100],
     scoreUp: function () {
         this.score += this.level * 10;
-        console.log(this.level, this.score);
     },
     get head() {
         return this.snake[0];
