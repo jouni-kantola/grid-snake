@@ -167,8 +167,10 @@ const game = (snake) => {
                     ? "down"
                     : "left";
 
-            cells[gameState.head].classList.add(snakeHeadCssClass);
-            cells[gameState.head].classList.add(directionCssClass);
+            cells[gameState.head].classList.add(
+              snakeHeadCssClass,
+              directionCssClass
+            );
             gameState.tail.forEach((index) => cells[index].classList.add(snakeTailCssClass));
         }
 
