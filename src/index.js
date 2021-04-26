@@ -173,17 +173,16 @@ const game = (snake) => {
             cells[gameState.head].classList.add(snakeHeadCssClass);
             cells[gameState.head].classList.add(directionCssClass);
             gameState.tail.forEach((index) => cells[index].classList.add(snakeTailCssClass));
-
-            if (!gameState.hearts.length) {
-                grid.classList.add("level-clear");
-                clearInterval(gameloop);
-                gameState.level++;
-                level.textContent = gameState.level;
-                game(snake);
-            }
         }
 
-        requestAnimationFrame(render);
+        if (!gameState.hearts.length) {
+            grid.classList.add("level-clear");
+            gameState.level++;
+            level.textContent = gameState.level;
+            game(snake);
+        } else {
+          requestAnimationFrame(render);
+        }
     });
 };
 
