@@ -82,9 +82,8 @@ let gameState = {
     get tail() {
         return this.snake.slice(1, this.tailLength + 1);
     },
-    get levelConfig() {
-        const speed = () => this.levelSpeeds[this.level] || this.levelSpeeds[this.levelSpeeds.length - 1];
-        return { speed };
+    get speed() {
+        return this.levelSpeeds[this.level] || this.levelSpeeds[this.levelSpeeds.length - 1];
     },
 };
 
@@ -135,7 +134,7 @@ const game = (snake) => {
 
     let lastTick = 0;
     gameloop = requestAnimationFrame(function render(timestamp) {
-        if (timestamp - lastTick > gameState.levelConfig.speed()) {
+        if (timestamp - lastTick > gameState.speed) {
             lastTick = timestamp;
             cells[gameState.head].classList.remove(snakeHeadCssClass, "right", "up", "down", "left");
             gameState.tail.forEach((index) => cells[index].classList.remove(snakeTailCssClass));
