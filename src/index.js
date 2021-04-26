@@ -137,7 +137,6 @@ const game = (snake) => {
     gameloop = requestAnimationFrame(function render(timestamp) {
         if (timestamp - lastTick > gameState.levelConfig.speed) {
             lastTick = timestamp;
-            level.textContent = gameState.level;
             cells[gameState.head].classList.remove(snakeHeadCssClass, "right", "up", "down", "left");
             gameState.tail.forEach((index) => cells[index].classList.remove(snakeTailCssClass));
 
@@ -179,6 +178,7 @@ const game = (snake) => {
                 grid.classList.add("level-clear");
                 clearInterval(gameloop);
                 gameState.level++;
+                level.textContent = gameState.level;
                 game(snake);
             }
         }
