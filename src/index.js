@@ -143,9 +143,11 @@ const game = snake => {
     gameState.snake.push(gameState.head - 1);
   }
 
-  gameloop = setInterval(() => {
-    requestAnimationFrame(() => {
-      level.textContent = gameState.level;
+  let lastTick = 0;
+   gameloop =  requestAnimationFrame(function render(timestamp) {
+      if (timestamp - lastTick > gameState.levelConfig.speed) {
+        lastTick = timestamp;
+        level.textContent = gameState.level;
       cells[gameState.head].classList.remove(snakeHeadCssClass);
       cells[gameState.head].classList.remove("right");
       cells[gameState.head].classList.remove("up");
@@ -199,8 +201,10 @@ const game = snake => {
         gameState.level++;
         game(snake);
       }
-    });
-  }, gameState.levelConfig.speed);
+    }
+
+    requestAnimationFrame(render);
+  });
 };
 
 start.addEventListener("click", () => {
