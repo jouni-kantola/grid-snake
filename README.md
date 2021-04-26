@@ -10,4 +10,4 @@ The UI is responsive and works on both computers and touch devices. In the latte
 
 ## Run locally
 Currently no build step is required to run locally. Serve the files in `./src` folder. Example:
-- `npx http-server ./src`
+- `npx http-server ./src/ -c-1`
