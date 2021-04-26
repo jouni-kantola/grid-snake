@@ -13,7 +13,7 @@ const directions = {
     up: "ArrowUp",
     right: "ArrowRight",
     down: "ArrowDown",
-    left: "ArrowLeft",
+    left: "ArrowLeft"
 };
 
 const Snake = (numberOfColumns, numberOfRows) => {
@@ -27,7 +27,9 @@ const Snake = (numberOfColumns, numberOfRows) => {
                     if (wrapAround && !useHip) {
                         return false;
                     }
-                    return wrapAround ? row * numberOfColumns + numberOfColumns - 1 : updated;
+                    return wrapAround
+                        ? row * numberOfColumns + numberOfColumns - 1
+                        : updated;
                 }
                 case directions.up: {
                     const updated = from - numberOfColumns;
@@ -54,7 +56,7 @@ const Snake = (numberOfColumns, numberOfRows) => {
                     return wrapAround ? updated - numberOfColumns : updated;
                 }
             }
-        },
+        }
     };
 };
 
@@ -82,43 +84,50 @@ let gameState = {
         return this.snake.slice(1, this.tailLength + 1);
     },
     get speed() {
-        return this.levelSpeeds[this.level] || this.levelSpeeds[this.levelSpeeds.length - 1];
+        return (
+            this.levelSpeeds[this.level] ||
+            this.levelSpeeds[this.levelSpeeds.length - 1]
+        );
     },
-    gameOver: false,
+    gameOver: false
 };
 
 const ensureFree = (min, max, alreadyTaken = []) => {
     const rnd = Math.floor(Math.random() * max);
-    return rnd >= min && !alreadyTaken.includes(rnd) ? rnd : ensureFree(min, max, alreadyTaken);
+    return rnd >= min && !alreadyTaken.includes(rnd)
+        ? rnd
+        : ensureFree(min, max, alreadyTaken);
 };
 
-const game = (snake) => {
+const game = snake => {
     grid.classList.remove("level-clear");
     gameState.hearts = [];
     gameState.stops = [];
     const cells = grid.querySelectorAll(".cell");
-    cells.forEach((cell) => {
+    cells.forEach(cell => {
         cell.classList.remove("heart");
         cell.classList.remove("stop");
     });
 
-    new Array(useHip ? gameState.level + 1 : 1).fill(heartCssClass).forEach((cssClass) => {
-        const heart = ensureFree(0, gameState.numberOfCells, [
-            gameState.head,
-            ...gameState.tail,
-            gameState.hearts,
-        ]);
-        gameState.hearts.push(heart);
-        cells[heart].classList.add(cssClass);
-    });
+    new Array(useHip ? gameState.level + 1 : 1)
+        .fill(heartCssClass)
+        .forEach(cssClass => {
+            const heart = ensureFree(0, gameState.numberOfCells, [
+                gameState.head,
+                ...gameState.tail,
+                gameState.hearts
+            ]);
+            gameState.hearts.push(heart);
+            cells[heart].classList.add(cssClass);
+        });
 
     if (useHip)
-        new Array(gameState.level + 1).fill("stop").forEach((_) => {
+        new Array(gameState.level + 1).fill("stop").forEach(_ => {
             const stop = ensureFree(0, gameState.numberOfCells, [
                 gameState.head,
                 ...gameState.tail,
                 ...gameState.hearts,
-                ...gameState.stops,
+                ...gameState.stops
             ]);
             gameState.stops.push(stop);
             cells[stop].classList.add("stop");
@@ -126,7 +135,10 @@ const game = (snake) => {
 
     if (gameState.level === 1) {
         gameState.snake.push(
-            ensureFree(1, gameState.numberOfCells, [...gameState.hearts, ...gameState.stops])
+            ensureFree(1, gameState.numberOfCells, [
+                ...gameState.hearts,
+                ...gameState.stops
+            ])
         );
 
         gameState.snake.push(gameState.head - 1);
@@ -136,8 +148,16 @@ const game = (snake) => {
     gameloop = requestAnimationFrame(function render(timestamp) {
         if (timestamp - lastTick > gameState.speed) {
             lastTick = timestamp;
-            cells[gameState.head].classList.remove(snakeHeadCssClass, "right", "up", "down", "left");
-            gameState.tail.forEach((index) => cells[index].classList.remove(snakeTailCssClass));
+            cells[gameState.head].classList.remove(
+                snakeHeadCssClass,
+                "right",
+                "up",
+                "down",
+                "left"
+            );
+            gameState.tail.forEach(index =>
+                cells[index].classList.remove(snakeTailCssClass)
+            );
 
             const next = snake.move(gameState.head, gameState.direction);
             if (next !== false) gameState.snake.unshift(next);
@@ -152,7 +172,9 @@ const game = (snake) => {
                 gameState.gameOver = true;
             } else if (gameState.hearts.includes(gameState.head)) {
                 cells[gameState.head].classList.remove(heartCssClass);
-                gameState.hearts = gameState.hearts.filter((heart) => heart !== gameState.head);
+                gameState.hearts = gameState.hearts.filter(
+                    heart => heart !== gameState.head
+                );
                 gameState.tailLength++;
                 gameState.scoreUp();
                 score.textContent = gameState.score;
@@ -168,10 +190,12 @@ const game = (snake) => {
                     : "left";
 
             cells[gameState.head].classList.add(
-              snakeHeadCssClass,
-              directionCssClass
+                snakeHeadCssClass,
+                directionCssClass
             );
-            gameState.tail.forEach((index) => cells[index].classList.add(snakeTailCssClass));
+            gameState.tail.forEach(index =>
+                cells[index].classList.add(snakeTailCssClass)
+            );
         }
 
         if (gameState.gameOver) {
@@ -182,14 +206,16 @@ const game = (snake) => {
             level.textContent = gameState.level;
             game(snake);
         } else {
-          gameloop = requestAnimationFrame(render);
+            gameloop = requestAnimationFrame(render);
         }
     });
 };
 
 start.addEventListener("click", () => {
     document.activeElement.blur();
-    useHip = document.querySelector('input[name="game-style"]:checked').value === "hip";
+    useHip =
+        document.querySelector('input[name="game-style"]:checked').value ===
+        "hip";
     if (useHip) {
         grid.classList.add("hip");
         grid.classList.remove("vintage");
@@ -211,7 +237,7 @@ start.addEventListener("click", () => {
 
     const cells = new Array(gameState.numberOfCells)
         .fill(document.createElement("span"))
-        .map((span) => {
+        .map(span => {
             const cell = span.cloneNode();
             cell.classList.add("cell");
             return cell;
@@ -223,7 +249,7 @@ start.addEventListener("click", () => {
 
         grid.innerHTML = "";
         grid.style.gridTemplateColumns = `repeat(${gameState.numberOfColumns}, 1fr)`;
-        cells.forEach((cell) => {
+        cells.forEach(cell => {
             grid.appendChild(cell);
         });
 
@@ -233,22 +259,28 @@ start.addEventListener("click", () => {
     });
 });
 
-const updateDirection = (direction) => {
+const updateDirection = direction => {
     switch (direction) {
         case directions.left:
         case directions.right:
-            if (gameState.direction !== directions.left && gameState.direction !== directions.right)
+            if (
+                gameState.direction !== directions.left &&
+                gameState.direction !== directions.right
+            )
                 gameState.direction = direction;
             break;
         case directions.up:
         case directions.down:
-            if (gameState.direction !== directions.up && gameState.direction !== directions.down)
+            if (
+                gameState.direction !== directions.up &&
+                gameState.direction !== directions.down
+            )
                 gameState.direction = direction;
             break;
     }
 };
 
-window.addEventListener("keydown", (event) => {
+window.addEventListener("keydown", event => {
     switch (event.key) {
         case directions.left:
             updateDirection(directions.left);
@@ -265,18 +297,18 @@ window.addEventListener("keydown", (event) => {
     }
 });
 
-document.querySelector(".left").addEventListener("touchstart", (event) => {
+document.querySelector(".left").addEventListener("touchstart", event => {
     updateDirection(directions.left);
 });
 
-document.querySelector(".up").addEventListener("touchstart", (event) => {
+document.querySelector(".up").addEventListener("touchstart", event => {
     updateDirection(directions.up);
 });
 
-document.querySelector(".down").addEventListener("touchstart", (event) => {
+document.querySelector(".down").addEventListener("touchstart", event => {
     updateDirection(directions.down);
 });
 
-document.querySelector(".right").addEventListener("touchstart", (event) => {
+document.querySelector(".right").addEventListener("touchstart", event => {
     updateDirection(directions.right);
 });
