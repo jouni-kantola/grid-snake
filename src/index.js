@@ -84,6 +84,7 @@ let gameState = {
     get speed() {
         return this.levelSpeeds[this.level] || this.levelSpeeds[this.levelSpeeds.length - 1];
     },
+    gameOver: false,
 };
 
 const ensureFree = (min, max, alreadyTaken = []) => {
@@ -141,16 +142,14 @@ const game = (snake) => {
             const next = snake.move(gameState.head, gameState.direction);
             if (next !== false) gameState.snake.unshift(next);
             else {
-                grid.classList.add("game-over");
-                clearInterval(gameloop);
+                gameState.gameOver = true;
             }
 
             if (
                 gameState.stops.includes(gameState.head) ||
                 gameState.tail.includes(gameState.head)
             ) {
-                grid.classList.add("game-over");
-                clearInterval(gameloop);
+                gameState.gameOver = true;
             } else if (gameState.hearts.includes(gameState.head)) {
                 cells[gameState.head].classList.remove(heartCssClass);
                 gameState.hearts = gameState.hearts.filter((heart) => heart !== gameState.head);
@@ -173,7 +172,9 @@ const game = (snake) => {
             gameState.tail.forEach((index) => cells[index].classList.add(snakeTailCssClass));
         }
 
-        if (!gameState.hearts.length) {
+        if (gameState.gameOver) {
+            grid.classList.add("game-over");
+        } else if (!gameState.hearts.length) {
             grid.classList.add("level-clear");
             gameState.level++;
             level.textContent = gameState.level;
@@ -195,6 +196,7 @@ start.addEventListener("click", () => {
         grid.classList.add("vintage");
     }
     grid.classList.remove("game-over");
+    gameState.gameOver = false;
     gameState.numberOfColumns = +document.querySelector("#columns").value;
     gameState.numberOfRows = +document.querySelector("#rows").value;
     gameState.level = 1;
@@ -203,7 +205,7 @@ start.addEventListener("click", () => {
     gameState.direction = directions.right;
     gameState.score = 0;
 
-    clearInterval(gameloop);
+    cancelAnimationFrame(gameloop);
 
     const cells = new Array(gameState.numberOfCells)
         .fill(document.createElement("span"))
