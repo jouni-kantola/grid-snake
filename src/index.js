@@ -71,6 +71,7 @@ let gameState = {
     score: 0,
     snake: [],
     tailLength: 0,
+    levelSpeeds: [500, 450, 400, 350, 300, 250, 200, 150, 100, 0],
     get head() {
         return this.snake[0];
     },
@@ -82,8 +83,7 @@ let gameState = {
         const hearts = this.level + 1;
         const stops = this.level + 1;
 
-        const levelSpeeds = [500, 450, 400, 350, 300, 250, 200, 150, 100];
-        const speed = levelSpeeds[this.level - 1] || levelSpeeds[levelSpeeds.length - 1];
+        const speed = this.levelSpeeds[this.level];
         return { score, hearts, stops, speed };
     },
 };
