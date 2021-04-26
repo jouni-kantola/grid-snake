@@ -155,8 +155,8 @@ const game = snake => {
                 "down",
                 "left"
             );
-            gameState.tail.forEach(index =>
-                cells[index].classList.remove(snakeTailCssClass)
+            cells[gameState.tail[gameState.tail.length - 1]].classList.remove(
+                snakeTailCssClass
             );
 
             const next = snake.move(gameState.head, gameState.direction);
@@ -193,9 +193,7 @@ const game = snake => {
                 snakeHeadCssClass,
                 directionCssClass
             );
-            gameState.tail.forEach(index =>
-                cells[index].classList.add(snakeTailCssClass)
-            );
+            cells[gameState.tail[0]].classList.add(snakeTailCssClass);
         }
 
         if (gameState.gameOver) {
