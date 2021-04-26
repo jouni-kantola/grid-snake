@@ -138,11 +138,7 @@ const game = (snake) => {
         if (timestamp - lastTick > gameState.levelConfig.speed) {
             lastTick = timestamp;
             level.textContent = gameState.level;
-            cells[gameState.head].classList.remove(snakeHeadCssClass);
-            cells[gameState.head].classList.remove("right");
-            cells[gameState.head].classList.remove("up");
-            cells[gameState.head].classList.remove("down");
-            cells[gameState.head].classList.remove("left");
+            cells[gameState.head].classList.remove(snakeHeadCssClass, "right", "up", "down", "left");
             gameState.tail.forEach((index) => cells[index].classList.remove(snakeTailCssClass));
 
             const next = snake.move(gameState.head, gameState.direction);
