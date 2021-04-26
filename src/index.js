@@ -180,7 +180,7 @@ const game = (snake) => {
             level.textContent = gameState.level;
             game(snake);
         } else {
-          requestAnimationFrame(render);
+          gameloop = requestAnimationFrame(render);
         }
     });
 };
@@ -216,6 +216,9 @@ start.addEventListener("click", () => {
         });
 
     requestAnimationFrame(() => {
+        level.textContent = gameState.level;
+        score.textContent = gameState.score;
+
         grid.innerHTML = "";
         grid.style.gridTemplateColumns = `repeat(${gameState.numberOfColumns}, 1fr)`;
         cells.forEach((cell) => {
