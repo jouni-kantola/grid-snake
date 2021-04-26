@@ -79,11 +79,11 @@ let gameState = {
         return this.snake.slice(1, this.tailLength + 1);
     },
     get levelConfig() {
-        const score = this.level * 10;
-        const hearts = this.level + 1;
-        const stops = this.level + 1;
+        const score = () => this.level * 10;
+        const hearts = () => this.level + 1;
+        const stops = () => this.level + 1;
 
-        const speed = this.levelSpeeds[this.level];
+        const speed = () => this.levelSpeeds[this.level];
         return { score, hearts, stops, speed };
     },
 };
@@ -103,7 +103,7 @@ const game = (snake) => {
         cell.classList.remove("stop");
     });
 
-    new Array(useHip ? gameState.levelConfig.hearts : 1).fill(heartCssClass).forEach((cssClass) => {
+    new Array(useHip ? gameState.levelConfig.hearts() : 1).fill(heartCssClass).forEach((cssClass) => {
         const heart = ensureFree(0, gameState.numberOfCells, [
             gameState.head,
             ...gameState.tail,
@@ -114,7 +114,7 @@ const game = (snake) => {
     });
 
     if (useHip)
-        new Array(gameState.levelConfig.stops).fill("stop").forEach((_) => {
+        new Array(gameState.levelConfig.stops()).fill("stop").forEach((_) => {
             const stop = ensureFree(0, gameState.numberOfCells, [
                 gameState.head,
                 ...gameState.tail,
@@ -135,7 +135,7 @@ const game = (snake) => {
 
     let lastTick = 0;
     gameloop = requestAnimationFrame(function render(timestamp) {
-        if (timestamp - lastTick > gameState.levelConfig.speed) {
+        if (timestamp - lastTick > gameState.levelConfig.speed()) {
             lastTick = timestamp;
             cells[gameState.head].classList.remove(snakeHeadCssClass, "right", "up", "down", "left");
             gameState.tail.forEach((index) => cells[index].classList.remove(snakeTailCssClass));
@@ -157,7 +157,7 @@ const game = (snake) => {
                 cells[gameState.head].classList.remove(heartCssClass);
                 gameState.hearts = gameState.hearts.filter((heart) => heart !== gameState.head);
                 gameState.tailLength++;
-                gameState.score += gameState.levelConfig.score;
+                gameState.score += gameState.levelConfig.score();
                 score.textContent = gameState.score;
             }
 
