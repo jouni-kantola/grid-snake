@@ -83,11 +83,8 @@ let gameState = {
         return this.snake.slice(1, this.tailLength + 1);
     },
     get levelConfig() {
-        const hearts = () => this.level + 1;
-        const stops = () => this.level + 1;
-
         const speed = () => this.levelSpeeds[this.level] || this.levelSpeeds[this.levelSpeeds.length - 1];
-        return { hearts, stops, speed };
+        return { speed };
     },
 };
 
@@ -106,7 +103,7 @@ const game = (snake) => {
         cell.classList.remove("stop");
     });
 
-    new Array(useHip ? gameState.levelConfig.hearts() : 1).fill(heartCssClass).forEach((cssClass) => {
+    new Array(useHip ? gameState.level + 1 : 1).fill(heartCssClass).forEach((cssClass) => {
         const heart = ensureFree(0, gameState.numberOfCells, [
             gameState.head,
             ...gameState.tail,
@@ -117,7 +114,7 @@ const game = (snake) => {
     });
 
     if (useHip)
-        new Array(gameState.levelConfig.stops()).fill("stop").forEach((_) => {
+        new Array(gameState.level + 1).fill("stop").forEach((_) => {
             const stop = ensureFree(0, gameState.numberOfCells, [
                 gameState.head,
                 ...gameState.tail,
