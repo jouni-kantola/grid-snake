@@ -208,7 +208,8 @@ label[for="configuration-toggle"] {
   left: 60%;
   border-radius: 100%;
   z-index: 1;
-  transition: top 0.7s ease-out, right 0.7s ease-out, left 0.7s ease-out, bottom 0.7s ease-out;
+  transition: top 0.7s ease-out, right 0.7s ease-out, left 0.7s ease-out,
+    bottom 0.7s ease-out;
 }
 
 .head.right:before {
