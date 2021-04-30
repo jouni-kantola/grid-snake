@@ -291,26 +291,28 @@ window.addEventListener("keydown", event => {
   }
 });
 
-document
-  .querySelector(".left")
-  .addEventListener("touchstart", () => updateDirection(directions.left), {
-    passive: true,
-  });
+if (window.matchMedia("(pointer: coarse)").matches) {
+  document
+    .querySelector(".left")
+    .addEventListener("touchstart", () => updateDirection(directions.left), {
+      passive: true,
+    });
 
-document
-  .querySelector(".up")
-  .addEventListener("touchstart", () => updateDirection(directions.up), {
-    passive: true,
-  });
+  document
+    .querySelector(".up")
+    .addEventListener("touchstart", () => updateDirection(directions.up), {
+      passive: true,
+    });
 
-document
-  .querySelector(".down")
-  .addEventListener("touchstart", () => updateDirection(directions.down), {
-    passive: true,
-  });
+  document
+    .querySelector(".down")
+    .addEventListener("touchstart", () => updateDirection(directions.down), {
+      passive: true,
+    });
 
-document
-  .querySelector(".right")
-  .addEventListener("touchstart", () => updateDirection(directions.right), {
-    passive: true,
-  });
+  document
+    .querySelector(".right")
+    .addEventListener("touchstart", () => updateDirection(directions.right), {
+      passive: true,
+    });
+}
