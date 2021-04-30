@@ -6,6 +6,9 @@
   "display": "fullscreen",
   "background_color": "#f3f1f0",
   "description": "Play Snake like it's 1999 in a 2020 way",
+  "lang": "en",
+  "dir": "ltr",
+  "orientation": "any",
   "icons": [
     {
       "src": "img/grid-snake-48x48.png",
