@@ -1,4 +1,4 @@
-const version = "v1.0.0";
+const version = "v1.0.3";
 const pwaCache = `grid-snake-${version}`;
 
 const files = ["./index.html", "./index.js", "./styles.css"];
@@ -24,15 +24,25 @@ self.addEventListener("activate", event => {
 
 self.addEventListener("fetch", event => {
   event.respondWith(
-    caches.match(event.request).then(alreadyCached => {
-      return (
-        alreadyCached ||
-        fetch(event.request).then(async response => {
-          const cache = await caches.open(pwaCache);
-          cache.put(event.request, response.clone());
-          return response;
-        })
-      );
+    caches.match(event.request).then(async alreadyCached => {
+      return alreadyCached || (await fetchAndCache(event));
     })
   );
 });
+
+async function fetchAndCache(event) {
+  if (
+    event.request.cache === "only-if-cached" &&
+    event.request.mode !== "same-origin"
+  )
+    return;
+
+  return fetch(event.request).then(async response => {
+    if (!response.url) return response;
+    if (new URL(response.url).origin !== location.origin) return response;
+
+    const cache = await caches.open(pwaCache);
+    cache.put(event.request, response.clone());
+    return response;
+  });
+}
