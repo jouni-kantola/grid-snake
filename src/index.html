@@ -11,6 +11,7 @@
       name="description"
       content="Play Snake like it's 1999 in a 2020 way. Play in vintage or hip game mode."
     />
+    <meta name="theme-color" content="#daa942" />
     <title>Grid Snake</title>
   </head>
 
@@ -82,18 +83,17 @@
       <button class="cross center">N/A</button>
     </div>
     <script>
-        if ("serviceWorker" in navigator) {
-            (async function () {
-                const sw = navigator.serviceWorker;
+      if ("serviceWorker" in navigator) {
+        (async function () {
+          const sw = navigator.serviceWorker;
 
-                try {
-                    const registration = await sw
-                        .register("./sw.js", { scope: "./" });
-                } catch (error) {
-                    console.error("Registration failed with " + error);
-                }
-            })();
-        }
+          try {
+            const registration = await sw.register("./sw.js", { scope: "./" });
+          } catch (error) {
+            console.error("Registration failed with " + error);
+          }
+        })();
+      }
     </script>
     <script src="./index.js"></script>
   </body>
