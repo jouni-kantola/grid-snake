@@ -16,6 +16,11 @@
       "src": "img/grid-snake-144x144.png",
       "sizes": "144x144",
       "type": "image/png"
+    },
+    {
+      "src": "img/grid-snake-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
     }
   ],
   "prefer_related_applications": false,
