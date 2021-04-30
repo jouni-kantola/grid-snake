@@ -8,7 +8,7 @@ The idea of building Snake and (over-)use CSS Grid as much as possible, started 
 
 ## Play
 
-The UI is responsive and works on both computers and touch devices. In the latter scenario, on-screen game controls are displayed. Try it out here:
+The UI is responsive and works on both computers and touch devices. In the latter scenario, on-screen game controls are displayed. Grid Snake can be installed as a fullscreen app (PWA). Try it out here:
 [Grid Snake](https://jouni.kantola.se/by-me/grid-snake/)
 
 ## Run locally
