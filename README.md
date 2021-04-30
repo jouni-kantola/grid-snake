@@ -13,6 +13,10 @@ The UI is responsive and works on both computers and touch devices. In the latte
 
 ## Run locally
 
-Currently no build step is required to run locally. Serve the files in `./src` folder. Example:
+Currently no build step is required to run locally. Serve the files in `./src` folder.
 
-- `npx http-server ./src/ -c-1`
+## Development
+
+```sh
+npm install && npm start
+```
