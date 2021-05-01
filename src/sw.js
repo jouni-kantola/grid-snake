@@ -1,7 +1,7 @@
-const version = "v1.0.4";
+const version = "v1.0.5";
 const pwaCache = `grid-snake-${version}`;
 
-const files = ["./index.html", "./index.js", "./styles.css"];
+const files = ["./index.html", "./index.js", "./styles.css", "./fonts.css"];
 
 self.addEventListener("install", event => {
   event.waitUntil(
