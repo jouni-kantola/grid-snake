@@ -3,9 +3,9 @@
   font-family: monospace;
   margin: 0;
   padding: 0;
-  line-height: 1.35;
+  line-height: 1;
   font-weight: 100;
-  letter-spacing: 1.05px;
+  letter-spacing: 1.5px;
   word-spacing: 0px;
   text-transform: uppercase;
 }
@@ -24,6 +24,7 @@ body {
 button {
   font-family: monospace;
   text-transform: uppercase;
+  font-size: 18px;
 }
 
 .game {
@@ -111,11 +112,14 @@ label[for="configuration-toggle"] {
   position: absolute;
   top: 4px;
   right: 8px;
-  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: 1px solid #666;
   border-radius: 100%;
-  height: 2.4rem;
-  width: 2.4rem;
+  height: 35px;
+  width: 35px;
+  line-height: 35px;
   text-align: center;
   background-color: #333;
   color: #fff;

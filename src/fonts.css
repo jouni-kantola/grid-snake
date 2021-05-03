@@ -1,18 +1,17 @@
 * {
-  font-family: "Major Mono Display";
-  font-size: 16px;
-  line-height: 1.55;
+  font-family: "Major Mono Display", monospace;
+  line-height: 1.15;
   font-weight: 400;
-  letter-spacing: 0px;
+  letter-spacing: -0.75px;
   word-spacing: 0px;
   text-transform: lowercase;
 }
+
 body {
-  font-family: "Major Mono Display";
-  font-size: 16px;
-  line-height: 1.55;
+  font-family: "Major Mono Display", monospace;
+  line-height: 1.15;
   font-weight: 400;
-  letter-spacing: 0px;
+  letter-spacing: -0.75px;
   word-spacing: 0px;
 }
 
