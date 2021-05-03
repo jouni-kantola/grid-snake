@@ -19,7 +19,14 @@ self.addEventListener("install", event => {
 });
 
 self.addEventListener("activate", event => {
-  event.waitUntil(self.clients.claim());
+  event.waitUntil(
+    caches.keys().then(async keys => {
+      await Promise.all(
+        keys.filter(key => pwaCache !== key).map(key => caches.delete(key))
+      );
+      return await self.clients.claim();
+    })
+  );
 });
 
 self.addEventListener("fetch", event => {
