@@ -57,6 +57,14 @@ button {
   margin-top: 2px;
 }
 
+.setup .grid-size {
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: start;
+  align-items: baseline;
+  gap: 10px;
+}
+
 .setup #start {
   border: 1px solid #666;
   padding: 10px;
@@ -76,7 +84,7 @@ button {
   font-family: sans-serif;
   font-size: 16px;
   padding: 3px;
-  margin: 0 0 8px 5px;
+  margin-bottom: 5px;
   min-width: 40px;
 }
 
