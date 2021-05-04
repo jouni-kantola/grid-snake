@@ -53,7 +53,8 @@ button {
 }
 
 .setup .activation {
-  display: flex;
+  display: grid;
+  grid-auto-flow: column;
   margin-top: 2px;
 }
 
@@ -97,6 +98,7 @@ button {
 .setup label[for="vintage"] {
   padding: 10px;
   border: 1px solid #666;
+  text-align: center;
 }
 
 .setup label[for="hip"]:hover,
