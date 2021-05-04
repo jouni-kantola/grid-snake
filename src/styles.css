@@ -86,7 +86,7 @@ button {
   font-size: 16px;
   padding: 3px;
   margin-bottom: 5px;
-  min-width: 40px;
+  width: 40px;
 }
 
 .setup input[id="hip"],
