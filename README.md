@@ -20,3 +20,7 @@ Currently no build step is required to run locally. Serve the files in `./src` f
 ```sh
 npm install && npm start
 ```
+
+## Credits
+
+Font used is [Majör Mono Display](https://github.com/googlefonts/majormono) in WOFF2 format, with a numerals (0-9) and lowercase basic Latin characters (a-z).

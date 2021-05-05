@@ -1,13 +1,18 @@
+@font-face {
+  font-family: "Major Mono Display";
+  src: url("./font/MajorMonoDisplay-Regular-subset.woff2") format("woff2");
+}
+
 * {
   box-sizing: border-box;
-  font-family: monospace;
+  font-family: "Major Mono Display";
   margin: 0;
   padding: 0;
-  line-height: 1;
-  font-weight: 100;
-  letter-spacing: 1.5px;
+  line-height: 1.15;
+  font-weight: 400;
+  letter-spacing: -0.75px;
   word-spacing: 0px;
-  text-transform: uppercase;
+  text-transform: lowercase;
 }
 
 html,
@@ -16,15 +21,18 @@ body {
 }
 
 body {
-  font-size: 18px;
   background-color: #f3f1f0;
-  font-family: monospace;
+  font-family: "Major Mono Display";
+  text-transform: lowercase;
+  line-height: 1.15;
+  font-weight: 400;
+  letter-spacing: -0.75px;
+  word-spacing: 0px;
 }
 
 button {
-  font-family: monospace;
-  text-transform: uppercase;
-  font-size: 18px;
+  font-family: "Major Mono Display";
+  text-transform: lowercase;
 }
 
 .game {

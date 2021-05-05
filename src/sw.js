@@ -1,7 +1,12 @@
-const version = "v1.0.7";
+const version = "v1.0.8";
 const pwaCache = `grid-snake-${version}`;
 
-const files = ["./index.html", "./index.js", "./styles.css", "./fonts.css"];
+const files = [
+  "./index.html",
+  "./index.js",
+  "./styles.css",
+  "./font/MajorMonoDisplay-Regular-subset.woff2",
+];
 
 self.addEventListener("install", event => {
   event.waitUntil(
