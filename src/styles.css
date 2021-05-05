@@ -144,8 +144,7 @@ label[for="configuration-toggle"] {
 }
 
 .configuration-toggle:checked ~ .configuration {
-  display: flex;
-  flex-flow: column;
+  display: grid;
   width: 100%;
 }
 
@@ -473,8 +472,8 @@ label[for="configuration-toggle"] {
   }
 
   .configuration-toggle:checked ~ .configuration {
-    flex-flow: row;
-    align-self: center;
+    width: auto;
+    grid-auto-flow: column;
   }
 
   label[for="configuration-toggle"] {
