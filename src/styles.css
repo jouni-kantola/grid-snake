@@ -52,14 +52,13 @@ button {
 .setup .activation {
   display: grid;
   grid-auto-flow: column;
-  margin-top: 2px;
 }
 
 .setup .grid-size {
   display: grid;
   grid-auto-flow: column;
   justify-content: start;
-  align-items: baseline;
+  align-items: center;
   gap: 10px;
 }
 
@@ -81,7 +80,6 @@ button {
   text-align: center;
   font-family: sans-serif;
   padding: 3px;
-  margin-bottom: 5px;
   width: 40px;
 }
 
@@ -146,6 +144,7 @@ label[for="configuration-toggle"] {
 .configuration-toggle:checked ~ .configuration {
   display: grid;
   width: 100%;
+  gap: 10px;
 }
 
 .level,
@@ -460,10 +459,6 @@ label[for="configuration-toggle"] {
   .setup input[id="columns"],
   .setup input[id="rows"] {
     margin-bottom: 0;
-  }
-
-  .setup .grid-size {
-    align-self: center;
   }
 
   .setup .activation {
